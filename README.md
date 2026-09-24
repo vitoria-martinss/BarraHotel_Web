@@ -139,3 +139,79 @@ Cada categoria poderá possuir diferentes subcategorias e características, perm
 Essa estrutura permitirá que os quartos sejam cadastrados de forma organizada e que o hóspede consiga consultar suas características antes de realizar uma reserva.
 
 ---
+
+## Benefícios Esperados
+
+A implantação do **Barra Hotel Web** busca proporcionar maior **organização, segurança e praticidade** no gerenciamento das informações do hotel.
+
+Para os hóspedes, o sistema oferecerá uma experiência mais rápida e acessível para consulta de quartos e realização de reservas. Para funcionários e administradores, permitirá maior controle das operações e dos dados, reduzindo processos manuais e facilitando o acesso às informações necessárias para o funcionamento do hotel.
+
+---
+
+## Diferencial da Solução
+
+Um dos principais diferenciais do **Barra Hotel Web** será a integração dos diferentes perfis de usuários em uma única plataforma, com funcionalidades e permissões específicas para cada um.
+
+Dessa forma, o sistema não será apenas um site institucional, mas uma plataforma de apoio à operação e à gestão do hotel, unindo o atendimento ao hóspede e o gerenciamento interno em um único ambiente.
+
+---
+
+## Segurança e Controle de Acesso
+
+O sistema contará com mecanismos de autenticação e autorização para garantir que cada usuário tenha acesso somente às funcionalidades permitidas para seu perfil.
+
+A separação entre hóspedes, funcionários e administradores permitirá um maior controle das operações e das informações disponíveis no sistema, contribuindo para a segurança e organização dos dados.
+
+---
+
+## Banco de Dados
+
+O banco de dados será responsável por armazenar e relacionar as principais informações utilizadas pelo sistema.
+
+Entre os principais registros previstos estão:
+
+* Usuários.
+* Hóspedes.
+* Funcionários.
+* Administradores.
+* Quartos.
+* Categorias de quartos.
+* Características dos quartos.
+* Reservas.
+* Informações relacionadas às hospedagens.
+
+Os dados serão estruturados de forma relacionada, buscando garantir organização, integridade e facilidade de manutenção das informações.
+
+---
+
+## Requisitos Gerais
+
+O sistema deverá atender aos seguintes requisitos gerais:
+
+* Possuir autenticação de usuários.
+* Possuir diferentes níveis de acesso.
+* Permitir o gerenciamento de informações de acordo com as permissões de cada perfil.
+* Armazenar os dados em banco de dados.
+* Permitir comunicação entre Front-end e Back-end por meio de uma API.
+* Possibilitar o gerenciamento de quartos e reservas.
+* Possuir interface intuitiva e responsiva.
+* Manter as informações organizadas e consistentes.
+* Garantir que operações administrativas sejam restritas aos usuários autorizados.
+
+---
+
+## Equipe
+
+**Projeto:** Barra Hotel Web
+**Módulo:** Desenvolvimento de Aplicação Web
+
+### Integrantes
+
+* Daniel de Freitas Santicioli
+* Jackson Willian dos Santos Florencio
+* Leticia Jorge
+* Poliana Procopio Machado Vela
+* Vitória Martins Da Silva 
+
+---
+

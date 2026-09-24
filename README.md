@@ -60,3 +60,82 @@ O sistema permitirá o cadastro e autenticação dos usuários, consulta de quar
 Cada perfil de usuário terá acesso a funcionalidades específicas de acordo com suas permissões. O sistema também contará com uma base de dados para armazenamento e organização das informações relacionadas aos usuários, quartos, reservas e demais registros necessários para o funcionamento da aplicação.
 
 ---
+## Funcionalidades Principais
+
+### Autenticação e Usuários
+
+* Cadastro de hóspedes.
+* Login de usuários.
+* Controle de acesso por perfil.
+* Gerenciamento de dados pessoais.
+* Controle de permissões.
+* Gerenciamento de usuários pelos administradores.
+
+### Hóspedes
+
+* Cadastro na plataforma.
+* Login.
+* Consulta de quartos.
+* Visualização das características dos quartos.
+* Consulta de disponibilidade.
+* Realização de reservas.
+* Consulta de suas reservas.
+* Acompanhamento das informações relacionadas às suas hospedagens.
+
+### Quartos
+
+* Cadastro de quartos.
+* Organização por categorias.
+* Cadastro das características dos quartos.
+* Controle de disponibilidade.
+* Atualização das informações dos quartos.
+* Gerenciamento dos quartos pelos funcionários e administradores.
+
+### Reservas
+
+* Consulta de disponibilidade.
+* Criação de reservas.
+* Consulta de reservas.
+* Alteração de informações das reservas conforme permissões.
+* Cancelamento de reservas conforme regras definidas pelo sistema.
+* Gerenciamento das reservas por funcionários e administradores.
+
+### Funcionários
+
+* Cadastro de funcionários.
+* Login de funcionários.
+* Acesso às funcionalidades operacionais.
+* Consulta e gerenciamento de informações relacionadas às reservas.
+* Consulta de hóspedes.
+* Gerenciamento das informações permitidas pelo seu perfil.
+
+### Administração
+
+* Gerenciamento de usuários.
+* Gerenciamento de funcionários.
+* Gerenciamento de quartos.
+* Gerenciamento de reservas.
+* Controle de informações do sistema.
+* Visualização de informações para apoio à gestão.
+
+---
+
+## Categorias de Quartos
+
+O sistema trabalhará com quatro categorias principais de quartos:
+
+* **Single**
+* **Casal**
+* **Triplo**
+* **Quádruplo**
+
+Cada categoria poderá possuir diferentes subcategorias e características, permitindo representar as diferentes opções disponibilizadas pelo hotel, como:
+
+* Quarto com ar-condicionado.
+* Quarto com ventilador.
+* Quarto com diferentes combinações de comodidades.
+* Outras características definidas de acordo com o cadastro do hotel.
+
+Essa estrutura permitirá que os quartos sejam cadastrados de forma organizada e que o hóspede consiga consultar suas características antes de realizar uma reserva.
+
+---

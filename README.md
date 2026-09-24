@@ -48,3 +48,15 @@ Desenvolver uma plataforma web própria para o **Barra Hotel**, capaz de integra
 * Garantir que cada perfil tenha acesso somente às funcionalidades correspondentes às suas permissões.
 * Facilitar o acompanhamento das operações relacionadas às hospedagens.
 * Disponibilizar informações que auxiliem o gerenciamento do hotel.
+
+---
+
+## Escopo do Sistema
+
+O **Barra Hotel Web** contemplará funcionalidades voltadas ao gerenciamento de hóspedes, funcionários, administradores, quartos e reservas.
+
+O sistema permitirá o cadastro e autenticação dos usuários, consulta de quartos e suas características, verificação de disponibilidade, realização e gerenciamento de reservas, além do controle das informações administrativas e operacionais do hotel.
+
+Cada perfil de usuário terá acesso a funcionalidades específicas de acordo com suas permissões. O sistema também contará com uma base de dados para armazenamento e organização das informações relacionadas aos usuários, quartos, reservas e demais registros necessários para o funcionamento da aplicação.
+
+---

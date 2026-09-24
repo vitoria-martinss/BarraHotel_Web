@@ -203,6 +203,7 @@ O sistema deverá atender aos seguintes requisitos gerais:
 ## Equipe
 
 **Projeto:** Barra Hotel Web
+
 **Módulo:** Desenvolvimento de Aplicação Web
 
 ### Integrantes

@@ -9,6 +9,20 @@ function noites(checkin, checkout) {
   return Math.round(ms / (1000 * 60 * 60 * 24));
 }
 
+const colunasReserva = `r.id, r.quarto_id, r.hospede_id, r.status, r.pago, r.valor_total,
+  DATE_FORMAT(r.data_checkin, '%Y-%m-%d') AS data_checkin,
+  DATE_FORMAT(r.data_checkout, '%Y-%m-%d') AS data_checkout,
+  DATE_FORMAT(r.criado_em, '%Y-%m-%d') AS criado_em,
+  t.nome AS tipo_nome, q.numero AS quarto_numero`;
+
+function formatarReserva(linha) {
+  return { ...linha, pago: !!linha.pago, valor_total: Number(linha.valor_total) };
+}
+
+function papelDeFuncionario(usuario) {
+  return ['admin', 'recepcionista'].includes(usuario.papel);
+}
+
 // Encontra um quarto livre daquele tipo no período (ou null se não houver)
 async function acharQuartoLivre(tipoId, checkin, checkout) {
   const [quartos] = await pool.query(
@@ -73,7 +87,7 @@ router.post('/', autenticar, async (req, res) => {
 router.get('/minhas', autenticar, async (req, res) => {
   try {
     const [linhas] = await pool.query(
-      `SELECT r.*, t.nome AS tipo_nome, q.numero AS quarto_numero
+      `SELECT ${colunasReserva}
        FROM reservas r
        JOIN quartos q ON q.id = r.quarto_id
        JOIN tipos_quarto t ON t.id = q.tipo_id
@@ -81,7 +95,7 @@ router.get('/minhas', autenticar, async (req, res) => {
        ORDER BY r.data_checkin DESC`,
       [req.usuario.id]
     );
-    res.json(linhas);
+    res.json(linhas.map(formatarReserva));
   } catch (err) {
     console.error(err);
     res.status(500).json({ erro: 'Erro ao buscar suas reservas' });
@@ -92,14 +106,14 @@ router.get('/minhas', autenticar, async (req, res) => {
 router.get('/', autenticar, exigirPapel('admin', 'recepcionista'), async (req, res) => {
   try {
     const [linhas] = await pool.query(
-      `SELECT r.*, t.nome AS tipo_nome, q.numero AS quarto_numero, u.nome AS hospede_nome
+      `SELECT ${colunasReserva}, u.nome AS hospede_nome
        FROM reservas r
        JOIN quartos q ON q.id = r.quarto_id
        JOIN tipos_quarto t ON t.id = q.tipo_id
        JOIN usuarios u ON u.id = r.hospede_id
        ORDER BY r.data_checkin DESC`
     );
-    res.json(linhas);
+    res.json(linhas.map(formatarReserva));
   } catch (err) {
     console.error(err);
     res.status(500).json({ erro: 'Erro ao buscar reservas' });
@@ -107,13 +121,20 @@ router.get('/', autenticar, exigirPapel('admin', 'recepcionista'), async (req, r
 });
 
 // Cancelar ou concluir uma reserva
-router.put('/:id/status', autenticar, exigirPapel('admin', 'recepcionista'), async (req, res) => {
+router.put('/:id/status', autenticar, async (req, res) => {
   const { status } = req.body;
   if (!['confirmada', 'cancelada', 'concluida'].includes(status)) {
     return res.status(400).json({ erro: 'Status inválido' });
   }
   try {
-    await pool.query('UPDATE reservas SET status = ? WHERE id = ?', [status, req.params.id]);
+    if (!papelDeFuncionario(req.usuario)) {
+      const [[reserva]] = await pool.query('SELECT hospede_id, status FROM reservas WHERE id = ?', [req.params.id]);
+      if (!reserva || reserva.hospede_id !== req.usuario.id || status !== 'cancelada' || reserva.status !== 'confirmada') {
+        return res.status(403).json({ erro: 'Você não tem permissão para isso' });
+      }
+    }
+    const [resultado] = await pool.query('UPDATE reservas SET status = ? WHERE id = ?', [status, req.params.id]);
+    if (resultado.affectedRows === 0) return res.status(404).json({ erro: 'Reserva não encontrada' });
     res.json({ ok: true });
   } catch (err) {
     console.error(err);
@@ -129,6 +150,66 @@ router.put('/:id/pagamento', autenticar, exigirPapel('admin', 'recepcionista'), 
   } catch (err) {
     console.error(err);
     res.status(500).json({ erro: 'Erro ao confirmar pagamento' });
+  }
+});
+
+router.put('/:id', autenticar, async (req, res) => {
+  const { data_checkin, data_checkout } = req.body;
+  if (!data_checkin || !data_checkout) {
+    return res.status(400).json({ erro: 'data_checkin e data_checkout são obrigatórios' });
+  }
+  if (new Date(data_checkout) <= new Date(data_checkin)) {
+    return res.status(400).json({ erro: 'A data de checkout deve ser depois do checkin' });
+  }
+
+  try {
+    const [[reserva]] = await pool.query(
+      `SELECT r.id, r.quarto_id, r.hospede_id, r.status, t.preco_diaria
+       FROM reservas r
+       JOIN quartos q ON q.id = r.quarto_id
+       JOIN tipos_quarto t ON t.id = q.tipo_id
+       WHERE r.id = ?`,
+      [req.params.id]
+    );
+    if (!reserva) return res.status(404).json({ erro: 'Reserva não encontrada' });
+    if (!papelDeFuncionario(req.usuario) && reserva.hospede_id !== req.usuario.id) {
+      return res.status(403).json({ erro: 'Você não tem permissão para isso' });
+    }
+    if (reserva.status !== 'confirmada') {
+      return res.status(409).json({ erro: 'Só reservas confirmadas podem ser alteradas' });
+    }
+
+    const [conflitos] = await pool.query(
+      `SELECT id FROM reservas
+       WHERE quarto_id = ? AND id <> ? AND status = 'confirmada'
+         AND data_checkin < ? AND data_checkout > ?
+       LIMIT 1`,
+      [reserva.quarto_id, reserva.id, data_checkout, data_checkin]
+    );
+    if (conflitos.length > 0) {
+      return res.status(409).json({ erro: 'O quarto não está disponível nesse período' });
+    }
+
+    const valorTotal = (noites(data_checkin, data_checkout) * Number(reserva.preco_diaria)).toFixed(2);
+    await pool.query(
+      'UPDATE reservas SET data_checkin = ?, data_checkout = ?, valor_total = ? WHERE id = ?',
+      [data_checkin, data_checkout, valorTotal, reserva.id]
+    );
+    res.json({ ok: true, valor_total: valorTotal });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ erro: 'Erro ao alterar reserva' });
+  }
+});
+
+router.delete('/:id', autenticar, exigirPapel('admin'), async (req, res) => {
+  try {
+    const [resultado] = await pool.query('DELETE FROM reservas WHERE id = ?', [req.params.id]);
+    if (resultado.affectedRows === 0) return res.status(404).json({ erro: 'Reserva não encontrada' });
+    res.json({ ok: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ erro: 'Erro ao excluir reserva' });
   }
 });
 

@@ -12,8 +12,10 @@ router.get('/', async (req, res) => {
   try {
     const [linhas] = await pool.query(`
       SELECT
-        q.id, q.numero, q.tipo_id, t.nome AS tipo_nome,
-        r.id AS reserva_id, r.data_checkin, r.data_checkout,
+        q.id, q.numero, q.tipo_id, t.nome AS tipo_nome, t.preco_diaria, t.capacidade_pessoas,
+        r.id AS reserva_id,
+        DATE_FORMAT(r.data_checkin, '%Y-%m-%d') AS data_checkin,
+        DATE_FORMAT(r.data_checkout, '%Y-%m-%d') AS data_checkout,
         u.nome AS hospede_nome
       FROM quartos q
       JOIN tipos_quarto t ON t.id = q.tipo_id
@@ -27,7 +29,10 @@ router.get('/', async (req, res) => {
     const quartos = linhas.map((l) => ({
       id: l.id,
       numero: l.numero,
+      tipo_id: l.tipo_id,
       tipo: l.tipo_nome,
+      preco_diaria: Number(l.preco_diaria),
+      capacidade: l.capacidade_pessoas,
       ocupado: !!l.reserva_id,
       hospede: l.hospede_nome || null,
       checkin: l.data_checkin || null,
@@ -55,6 +60,24 @@ router.post('/', exigirPapel('admin'), async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ erro: 'Erro ao cadastrar quarto (número já existe?)' });
+  }
+});
+
+router.put('/:id', exigirPapel('admin'), async (req, res) => {
+  const { tipo_id, numero } = req.body;
+  if (!tipo_id || !numero) return res.status(400).json({ erro: 'tipo_id e numero são obrigatórios' });
+
+  try {
+    const [resultado] = await pool.query('UPDATE quartos SET tipo_id = ?, numero = ? WHERE id = ?', [
+      tipo_id,
+      numero,
+      req.params.id,
+    ]);
+    if (resultado.affectedRows === 0) return res.status(404).json({ erro: 'Quarto não encontrado' });
+    res.json({ ok: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ erro: 'Erro ao atualizar quarto (número já existe?)' });
   }
 });
 

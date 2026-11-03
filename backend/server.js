@@ -3,6 +3,11 @@ const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
 
+if (!process.env.JWT_SECRET) {
+  console.error('Defina JWT_SECRET no .env antes de iniciar o servidor.');
+  process.exit(1);
+}
+
 const app = express();
 app.use(cors());
 app.use(express.json());

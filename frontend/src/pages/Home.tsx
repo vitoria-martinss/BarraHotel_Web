@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useApp } from '../store';
-import { Button, Badge, Card, Input, Select } from '../ui';
+import { Alert, Button, Badge, Card, Input, Select } from '../ui';
 import { guests as guestData, type Room } from '../data';
-import { chamarApi, tipoParaQuarto, type TipoQuarto } from '../services/api';
+import { chamarApi, mensagemDeErro, tipoParaQuarto, type TipoQuarto } from '../services/api';
 import { formatarMoeda } from '../utils/formatters';
 import PublicLayout from '../layouts/PublicLayout';
 import { QuartoCard } from '../components/QuartoCard';
@@ -14,9 +14,12 @@ function HomePage() {
   const [guests, setGuests] = useState('2');
 
   const [featuredRooms, setFeaturedRooms] = useState<Room[]>([]);
+  const [erro, setErro] = useState('');
 
   useEffect(() => {
-    chamarApi<TipoQuarto[]>('/api/tipos-quarto').then(tipos => setFeaturedRooms(tipos.slice(0, 3).map(tipoParaQuarto)));
+    chamarApi<TipoQuarto[]>('/api/tipos-quarto')
+      .then(tipos => setFeaturedRooms(tipos.slice(0, 3).map(tipoParaQuarto)))
+      .catch(falha => setErro(mensagemDeErro(falha)));
   }, []);
 
   const services = [
@@ -136,6 +139,7 @@ function HomePage() {
           <Button variant="outline" onClick={() => navigate({ id: 'rooms' })}>Ver todos os quartos →</Button>
         </div>
 
+        {erro && <Alert type="error" message={erro} onClose={() => setErro('')} className="mb-6" />}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {featuredRooms.map(room => (
             <QuartoCard key={room.id} room={room} onDetail={() => navigate({ id: 'room-detail', roomId: room.id })} />

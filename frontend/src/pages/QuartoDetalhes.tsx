@@ -3,7 +3,7 @@ import { useApp } from '../store';
 import { Button, Badge, Card, Input, Select } from '../ui';
 import PublicLayout from '../layouts/PublicLayout';
 import type { Room } from '../data';
-import { chamarApi, tipoParaQuarto, type TipoQuarto } from '../services/api';
+import { chamarApi, mensagemDeErro, tipoParaQuarto, type TipoQuarto } from '../services/api';
 import { QuartoCard } from '../components/QuartoCard';
 import { formatarMoeda } from '../utils/formatters';
 
@@ -11,10 +11,12 @@ function RoomDetailPage({ roomId }: { roomId: string }) {
   const { navigate, currentUser } = useApp();
   const [rooms, setRooms] = useState<Room[]>([]);
   const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState('');
 
   useEffect(() => {
     chamarApi<TipoQuarto[]>('/api/tipos-quarto')
       .then(tipos => setRooms(tipos.map(tipoParaQuarto)))
+      .catch(falha => setErro(mensagemDeErro(falha)))
       .finally(() => setCarregando(false));
   }, []);
 
@@ -31,7 +33,7 @@ function RoomDetailPage({ roomId }: { roomId: string }) {
   if (!room) return (
     <PublicLayout>
       <div className="text-center py-20">
-        <p className="text-slate-500">Quarto não encontrado</p>
+        <p className="text-slate-500">{erro || 'Quarto não encontrado'}</p>
         <Button className="mt-4" onClick={() => navigate({ id: 'rooms' })}>Ver quartos</Button>
       </div>
     </PublicLayout>

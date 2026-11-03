@@ -1,13 +1,14 @@
 import { useState } from 'react';
-import { useApp } from '../store';
-import { guests, employees } from '../data';
+import { useApp, type AuthUser } from '../store';
+import { chamarApi, mensagemDeErro } from '../services/api';
 import { Button, Input, Alert } from '../ui';
 import PublicLayout from '../layouts/PublicLayout';
 
 function RegisterPage() {
-  const { navigate } = useApp();
+  const { navigate, login } = useApp();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [erro, setErro] = useState('');
   const [form, setForm] = useState({
     name: '', cpf: '', birthDate: '', gender: '', email: '', phone: '', mobile: '',
     zipCode: '', state: '', city: '', neighborhood: '', street: '', number: '', complement: '',
@@ -54,10 +55,28 @@ function RegisterPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!validateStep3()) return;
+    setErro('');
     setLoading(true);
-    await new Promise(r => setTimeout(r, 1000));
+    try {
+      const { token, usuario } = await chamarApi<{
+        token: string;
+        usuario: { id: number; nome: string; papel: string };
+      }>('/api/auth/cadastro', {
+        method: 'POST',
+        body: JSON.stringify({
+          nome: form.name.trim(),
+          email: form.email.trim(),
+          senha: form.password,
+          telefone: form.mobile.trim(),
+          documento: form.cpf.trim(),
+        }),
+      });
+      localStorage.setItem('token', token);
+      login({ type: 'guest', data: { id: String(usuario.id), name: usuario.nome, email: form.email.trim() } } as AuthUser);
+    } catch (falha) {
+      setErro(mensagemDeErro(falha));
+    }
     setLoading(false);
-    navigate({ id: 'login' });
   }
 
   const brazilianStates = ['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
@@ -148,6 +167,7 @@ function RegisterPage() {
               {step === 3 && (
                 <form className="space-y-4" onSubmit={handleSubmit}>
                   <h2 className="font-semibold text-slate-800">Criar senha</h2>
+                  {erro && <Alert type="error" message={erro} onClose={() => setErro('')} />}
                   <div className="flex flex-col gap-1">
                     <label className="text-sm font-medium text-slate-700">Senha *</label>
                     <div className="relative">

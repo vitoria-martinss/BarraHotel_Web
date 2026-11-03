@@ -6,7 +6,11 @@ const pool = require('./db');
 
 async function main() {
   const email = process.env.ADMIN_EMAIL || 'admin@hotel.com';
-  const senha = process.env.ADMIN_SENHA || 'admin123';
+  const senha = process.env.ADMIN_SENHA;
+  if (!senha) {
+    console.error('Defina ADMIN_SENHA no .env antes de rodar o seed.');
+    process.exit(1);
+  }
 
   const [existentes] = await pool.query('SELECT id FROM usuarios WHERE email = ?', [email]);
   if (existentes.length > 0) {

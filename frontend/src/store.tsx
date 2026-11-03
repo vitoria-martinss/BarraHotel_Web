@@ -57,18 +57,30 @@ interface AppContextType {
 
 const AppContext = createContext<AppContextType | null>(null);
 
+// Restaura a sessão salva para o F5 não deslogar nem voltar para a home
+function lerSalvo<T>(chave: string, padrao: T): T {
+  try {
+    const valor = localStorage.getItem(chave);
+    return valor ? JSON.parse(valor) : padrao;
+  } catch {
+    return padrao;
+  }
+}
+
 export function AppProvider({ children }: { children: ReactNode }) {
-  const [page, setPage] = useState<Page>({ id: 'home' });
-  const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
+  const [page, setPage] = useState<Page>(() => lerSalvo<Page>('page', { id: 'home' }));
+  const [currentUser, setCurrentUser] = useState<AuthUser | null>(() => lerSalvo<AuthUser | null>('usuario', null));
   const [unreadNotifications] = useState(3);
 
   function navigate(nextPage: Page) {
     setPage(nextPage);
+    localStorage.setItem('page', JSON.stringify(nextPage));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function login(user: AuthUser) {
     setCurrentUser(user);
+    localStorage.setItem('usuario', JSON.stringify(user));
     if (user.type === 'guest') navigate({ id: 'guest-dashboard' });
     else if (user.type === 'admin') navigate({ id: 'admin-dashboard' });
     else navigate({ id: 'staff-dashboard' });
@@ -76,6 +88,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   function logout() {
     setCurrentUser(null);
+    localStorage.removeItem('usuario');
+    localStorage.removeItem('token');
     navigate({ id: 'home' });
   }
 

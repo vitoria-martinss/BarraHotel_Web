@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import type { Room } from '../data';
 import { useApp } from '../store';
-import { chamarApi, tipoParaQuarto, type TipoQuarto } from '../services/api';
-import { Button, Badge, Card, Input, Select } from '../ui';
+import { chamarApi, mensagemDeErro, tipoParaQuarto, type TipoQuarto } from '../services/api';
+import { Alert, Button, Badge, Card, Input, Select } from '../ui';
 import PublicLayout from '../layouts/PublicLayout';
 import { QuartoCard } from '../components/QuartoCard';
 
@@ -13,9 +13,12 @@ function RoomsPage() {
   const [status, setStatus] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
   const [search, setSearch] = useState('');
+  const [erro, setErro] = useState('');
 
   useEffect(() => {
-    chamarApi<TipoQuarto[]>('/api/tipos-quarto').then(tipos => setRooms(tipos.map(tipoParaQuarto)));
+    chamarApi<TipoQuarto[]>('/api/tipos-quarto')
+      .then(tipos => setRooms(tipos.map(tipoParaQuarto)))
+      .catch(falha => setErro(mensagemDeErro(falha)));
   }, []);
 
   const filtered = rooms.filter(r => {
@@ -114,6 +117,7 @@ function RoomsPage() {
             <div className="flex items-center justify-between mb-4">
               <p className="text-sm text-slate-500">{filtered.length} acomodações encontradas</p>
             </div>
+            {erro && <Alert type="error" message={erro} onClose={() => setErro('')} className="mb-4" />}
             {filtered.length === 0 ? (
               <div className="bg-white rounded-2xl p-12 text-center border border-slate-100">
                 <p className="text-slate-500 font-medium">Nenhum quarto encontrado</p>

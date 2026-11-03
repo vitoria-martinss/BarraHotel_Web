@@ -34,7 +34,7 @@ export default function DashboardLayout({ children, title, navItems, area }: Das
   const userInitials = userName.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
 
   return (
-    <div className="flex h-screen bg-[#F8F7F4] overflow-hidden" style={{ fontFamily: 'var(--font-body)' }}>
+    <div className="painel flex h-screen bg-[#F8F7F4] overflow-hidden" style={{ fontFamily: 'var(--font-body)' }}>
       {/* Sidebar */}
       <aside
         className="flex-shrink-0 flex flex-col transition-all duration-200"

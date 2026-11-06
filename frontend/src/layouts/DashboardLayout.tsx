@@ -1,7 +1,7 @@
 import { ReactNode, useState } from 'react';
 import { useApp, type Page } from '../store';
 import { notifications as notifData } from '../data';
-import logozinha from './images/logozinha.png';
+import logo from './images/logo.png';
 
 interface NavItem {
   id: string;
@@ -44,14 +44,14 @@ export default function DashboardLayout({ children, title, navItems, area }: Das
         <div className="h-16 flex items-center px-4 border-b border-white/10">
           {sidebarOpen ? (
             <div className="flex items-center gap-2.5 flex-1 min-w-0">
-              <img src={logozinha} alt="Barra Hotel" className="w-10 h-10 object-contain rounded-lg bg-white/5" /> 
+              <img src={logo} alt="Barra Hotel" className="w-10 h-10 object-contain rounded-lg bg-white/5" /> 
               <div className="flex-1 min-w-0">
                 <p className="text-white font-bold text-sm truncate" style={{ fontFamily: 'var(--font-display)' }}>Barra Hotel</p>
                 <p className="text-xs truncate" style={{ color: colors.accent }}>{title}</p>
               </div>
             </div>
           ) : (
-            <img src="/images/logozinha.png" alt="Barra Hotel" className="w-8 h-8 mx-auto rounded-lg object-contain bg-white/5" />
+            <img src="/images/logo.png" alt="Barra Hotel" className="w-8 h-8 mx-auto rounded-lg object-contain bg-white/5" />
           )}
         </div>
 

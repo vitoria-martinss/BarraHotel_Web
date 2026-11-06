@@ -41,7 +41,7 @@ function GuestProfilePage() {
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold text-slate-800" style={{ fontFamily: 'var(--font-display)' }}>Meu Perfil</h1>
           <Button variant={editing ? 'outline' : 'primary'} onClick={() => setEditing(!editing)}>
-            {editing ? 'Cancelar' : '✏️ Editar perfil'}
+            {editing ? 'Cancelar' : 'Editar perfil'}
           </Button>
         </div>
 
@@ -95,6 +95,5 @@ function GuestProfilePage() {
   );
 }
 
-// ─── Change Password ──────────────────────────────────────────────────────────
 
 export default GuestProfilePage;

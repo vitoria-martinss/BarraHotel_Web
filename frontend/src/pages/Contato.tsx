@@ -16,9 +16,9 @@ function ContactPage() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
         <div className="grid md:grid-cols-2 gap-10">
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-[#1B2B4B]" style={{ fontFamily: 'var(--font-display)' }}>Informações de contato</h2>
+            <h2 className="text-2xl font-bold text-[#1B2B4B]" >Informações de contato</h2>
             {[
-              {label: 'Endereço', value: 'Av. Manoel Gomes Casaca, Nº 111 — Vila Santana, Vargem Grande do Sul/SP, CEP 13880-000' },
+              {label: 'Endereço', value: 'Av. Manoel Gomes Casaca, Nº 111 - Vila Santana Vargem Grande do Sul/SP, CEP 13880-000' },
               {label: 'Telefone', value: '(19) 98448-7235' },
               {label: 'WhatsApp', value: '(19) 98448-7235' },
               {label: 'E-mail', value: 'reservasbarrahotel@gmail.com' },
@@ -45,7 +45,7 @@ function ContactPage() {
               </div>
             ) : (
               <form className="space-y-4" onSubmit={e => { e.preventDefault(); setSent(true); }}>
-                <h3 className="font-bold text-slate-800 text-lg" style={{ fontFamily: 'var(--font-display)' }}>Envie uma mensagem</h3>
+                <h3 className="font-medium text-slate-800 text-lg" >Envie uma mensagem</h3>
                 <Input label="Nome" placeholder="Seu nome completo" required />
                 <Input label="E-mail" type="email" placeholder="seu@email.com" required />
                 <Input label="Assunto" placeholder="Como podemos ajudar?" required />

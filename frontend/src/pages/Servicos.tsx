@@ -15,18 +15,18 @@ function ServicesPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {[
-            {title: 'Wi-Fi Gratuito', desc: 'Internet de alta velocidade disponível em todas as áreas do hotel, incluindo quartos, áreas comuns e piscina.' },
+            {title: 'Wi-Fi Gratuito', desc: 'Internet de alta velocidade disponível em todas as áreas do hotel, incluindo quartos, áreas comuns e academia.' },
             {title: 'Café da Manhã Incluso', desc: 'Buffet completo servido diariamente das 6h às 10h, com opções quentes, frias, sucos naturais e frutas frescas.' },
-            {title: 'Estacionamento Privativo', desc: 'Estacionamento coberto e gratuito para todos os hóspedes, com capacidade para 50 veículos.' },
-            {title: 'Piscina com Raia', desc: 'Piscina exterior com raia de 25m, aberta das 7h às 22h. Toalhas fornecidas pelo hotel.' },
-            {title: 'Limpeza e Governança', desc: 'Serviço de limpeza diária dos quartos, troca de roupas de cama e toalhas a cada dois dias ou sob solicitação.' },
-            {title: 'Recepção 24 horas', desc: 'Atendimento personalizado 24 horas por dia, 7 dias por semana. Solicitações de serviço a qualquer momento.' },
+            {title: 'Garagem', desc: 'Estacionamento coberto e gratuito para todos os hóspedes, com capacidade para 30 veículos.' },
+            {title: 'Academia', desc: 'Academia aberta das 7h às 22h. Toalhas fornecidas pelo hotel.' },
+            {title: 'Limpeza', desc: 'Serviço de limpeza diária dos quartos, troca de roupas de cama e toalhas todos os dia ou sob solicitação.' },
+            {title: 'Recepção 24 horas', desc: 'Atendimento personalizado 24 horas por dia, 7 dias por semana.' },
             {title: 'Acessibilidade', desc: 'Quartos e áreas comuns adaptados para pessoas com mobilidade reduzida, com elevadores e rampas de acesso.' },
-            {title: 'Bar e Restaurante', desc: 'Serviço de bar e restaurante no lobby, com cardápio regional e internacional. Funcionamento de almoço ao jantar.' },
+            {title: 'Bar e Restaurante', desc: 'Serviço de bar e restaurante no lobby, com cardápio regional e internacional. Funcionamento de almoço e no jantar.' },
           ].map(s => (
             <div key={s.title} className="flex gap-5 bg-white rounded-2xl p-6 border border-slate-100 hover:shadow-md transition-shadow">
               <div>
-                <h3 className="font-bold text-slate-800 mb-2" style={{ fontFamily: 'var(--font-display)' }}>{s.title}</h3>
+                <h3 className="font-medium text-slate-800 mb-2">{s.title}</h3>
                 <p className="text-slate-500 text-sm leading-relaxed">{s.desc}</p>
               </div>
             </div>
@@ -36,6 +36,5 @@ function ServicesPage() {
     </PublicLayout>
   );
 }
-
 
 export default ServicesPage;

@@ -86,6 +86,4 @@ function CheckInPage() {
   );
 }
 
-// ─── Check-out ────────────────────────────────────────────────────────────────
-
 export default CheckInPage;

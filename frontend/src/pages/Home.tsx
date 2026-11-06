@@ -6,6 +6,7 @@ import { chamarApi, mensagemDeErro, tipoParaQuarto, type TipoQuarto } from '../s
 import { formatarMoeda } from '../utils/formatters';
 import PublicLayout from '../layouts/PublicLayout';
 import { QuartoCard } from '../components/QuartoCard';
+import recepcao from '../layouts/images/recepcao.png'
 
 function HomePage() {
   const { navigate } = useApp();
@@ -25,8 +26,8 @@ function HomePage() {
   const services = [
     { icon: '', label: 'Wi-Fi Gratuito', desc: 'Conexão rápida em todo hotel' },
     { icon: '', label: 'Café da Manhã', desc: 'Buffet completo diariamente' },
-    { icon: '', label: 'Estacionamento', desc: 'Gratuito para hóspedes' },
-    { icon: '', label: 'Piscina', desc: 'Aberta das 7h às 22h' },
+    { icon: '', label: 'Garagem', desc: 'Gratuito para hóspedes' },
+    { icon: '', label: 'Academia', desc: 'Aberta das 7h às 22h' },
     { icon: '', label: 'Limpeza Diária', desc: 'Serviço de governança' },
     { icon: '', label: 'Segurança 24h', desc: 'Recepção e monitoramento' },
     { icon: '', label: 'Ar-condicionado', desc: 'Nos quartos selecionados' },
@@ -38,16 +39,12 @@ function HomePage() {
       {/* Hero */}
       <section className="relative h-[92vh] min-h-[600px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-[#070E14]">
-          <img
-            src="https://images.unsplash.com/photo-1646991761123-d83ce47c30c9?w=1920&h=1080&fit=crop&auto=format"
-            alt="Barra Hotel lobby"
-            className="w-full h-full object-cover opacity-50"
-          />
-        </div>
+         <img src={recepcao} alt="Barra Hotel lobby" className="w-full h-full object-cover opacity-50" />
+        </div>   
         <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
           <p className="text-[#D4AF6A] text-sm font-medium tracking-[0.25em] uppercase mb-4">Vargem Grande do Sul, São Paulo</p>
           <h1 className="font-bold mb-4 leading-tight" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 6vw, 4.5rem)' }}>
-            Barra Hotel
+            Barra Hotel                   
           </h1>
           <p className="text-slate-300 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
             Conforto, elegância e qualidade em cada detalhe da sua estadia.
@@ -118,7 +115,7 @@ function HomePage() {
               { value: '36', label: 'Quartos' },
               { value: '4', label: 'Categorias' },
               { value: '500+', label: 'Hóspedes/ano' },
-              { value: '4.8★', label: 'Avaliação' },
+              { value: '4.4★', label: 'Avaliação' },
             ].map(stat => (
               <div key={stat.label}>
                 <p className="text-2xl font-bold text-[#D4AF6A]" style={{ fontFamily: 'var(--font-display)' }}>{stat.value}</p>
@@ -181,16 +178,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-[#1B2B4B] py-16 text-center text-white">
-        <div className="max-w-xl mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-4" style={{ fontFamily: 'var(--font-display)' }}>Pronto para sua estadia?</h2>
-          <p className="text-slate-300 mb-8">Reserve agora e garanta o melhor preço diretamente com o hotel.</p>
-          <Button variant="secondary" size="lg" onClick={() => navigate({ id: 'booking' })}>
-            Reservar agora
-          </Button>
-        </div>
-      </section>
     </PublicLayout>
   );
 }

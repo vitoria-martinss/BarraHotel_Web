@@ -88,7 +88,7 @@ function RegisterPage() {
           <div className="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
             {/* Header */}
             <div className="bg-[#1B2B4B] px-8 py-5">
-              <h1 className="text-xl font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>Criar sua conta</h1>
+              <h1 className="text-xl font-bold text-white" >Criar sua conta</h1>
               <p className="text-slate-400 text-sm mt-0.5">Preencha seus dados para se cadastrar</p>
 
               {/* Steps indicator */}
@@ -99,7 +99,6 @@ function RegisterPage() {
                       {i + 1 < step ? '✓' : i + 1}
                     </div>
                     <span className={`text-xs ${i + 1 === step ? 'text-white' : 'text-white/40'}`}>{label}</span>
-                    {i < 2 && <div className={`flex-1 h-0.5 w-8 ${i + 1 < step ? 'bg-[#B8963E]' : 'bg-white/20'}`} />}
                   </div>
                 ))}
               </div>
@@ -121,6 +120,7 @@ function RegisterPage() {
                       <option value="Masculino">Masculino</option>
                       <option value="Feminino">Feminino</option>
                       <option value="Outro">Outro</option>
+
                     </select>
                     {errors.gender && <p className="text-xs text-red-500">{errors.gender}</p>}
                   </div>
@@ -131,7 +131,7 @@ function RegisterPage() {
                   </div>
                   <div className="flex gap-3 pt-2">
                     <Button type="button" variant="outline" onClick={() => navigate({ id: 'login' })} className="flex-1">Cancelar</Button>
-                    <Button type="button" variant="primary" onClick={() => validateStep1() && setStep(2)} className="flex-1">Próximo →</Button>
+                    <Button type="button" variant="primary" onClick={() => validateStep1() && setStep(2)} className="flex-1">Próximo </Button>
                   </div>
                 </div>
               )}
@@ -158,8 +158,8 @@ function RegisterPage() {
                     <Input label="Complemento" value={form.complement} onChange={e => update('complement', e.target.value)} />
                   </div>
                   <div className="flex gap-3 pt-2">
-                    <Button type="button" variant="outline" onClick={() => setStep(1)} className="flex-1">← Voltar</Button>
-                    <Button type="button" variant="primary" onClick={() => validateStep2() && setStep(3)} className="flex-1">Próximo →</Button>
+                    <Button type="button" variant="outline" onClick={() => setStep(1)} className="flex-1"> Voltar</Button>
+                    <Button type="button" variant="primary" onClick={() => validateStep2() && setStep(3)} className="flex-1">Próximo </Button>
                   </div>
                 </div>
               )}
@@ -216,7 +216,7 @@ function RegisterPage() {
                   )}
 
                   <div className="flex gap-3 pt-2">
-                    <Button type="button" variant="outline" onClick={() => setStep(2)} className="flex-1">← Voltar</Button>
+                    <Button type="button" variant="outline" onClick={() => setStep(2)} className="flex-1">Voltar</Button>
                     <Button type="submit" variant="primary" loading={loading} className="flex-1">Criar conta</Button>
                   </div>
                 </form>

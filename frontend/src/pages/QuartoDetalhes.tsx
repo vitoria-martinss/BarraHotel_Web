@@ -159,6 +159,5 @@ function RoomDetailPage({ roomId }: { roomId: string }) {
   );
 }
 
-// ─── Services Page ────────────────────────────────────────────────────────────
 
 export default RoomDetailPage;

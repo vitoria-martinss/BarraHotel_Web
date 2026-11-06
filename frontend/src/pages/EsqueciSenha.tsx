@@ -24,10 +24,7 @@ function ForgotPasswordPage() {
         <div className="w-full max-w-md">
           <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-8">
             <div className="text-center mb-6">
-              <div className="w-14 h-14 bg-[#1B2B4B]/10 rounded-2xl flex items-center justify-center mx-auto mb-3">
-                <svg className="w-7 h-7 text-[#1B2B4B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                </svg>
+              <div className="w-14 h-10 rounded-2xl flex items-center justify-center mx-auto mb-3">
               </div>
               <h1 className="text-xl font-bold text-slate-800" style={{ fontFamily: 'var(--font-display)' }}>Recuperar senha</h1>
               <p className="text-sm text-slate-500 mt-1">Enviaremos um link para seu e-mail</p>
@@ -61,7 +58,7 @@ function ForgotPasswordPage() {
                   Enviar link de recuperação
                 </Button>
                 <Button type="button" variant="ghost" onClick={() => navigate({ id: 'login' })} className="w-full">
-                  ← Voltar ao login
+                  Voltar ao login
                 </Button>
               </form>
             )}

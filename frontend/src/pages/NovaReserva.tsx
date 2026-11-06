@@ -82,7 +82,6 @@ function BookingPage({ initialRoomId }: { initialRoomId?: string }) {
                   {i + 1}
                 </div>
                 <div className={`flex-1 h-0.5 ${i + 1 < passo ? 'bg-[#1B2B4B]' : 'bg-slate-200'} ${i === PASSOS.length - 1 ? 'hidden' : ''}`} />
-                <span className={`hidden sm:block text-xs ml-1 mr-4 ${i + 1 === passo ? 'text-[#1B2B4B] font-semibold' : 'text-slate-400'}`}>{rotulo}</span>
               </div>
             ))}
           </div>

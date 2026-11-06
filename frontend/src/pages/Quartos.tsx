@@ -37,7 +37,6 @@ function RoomsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <p className="text-[#D4AF6A] text-sm font-medium tracking-widest uppercase mb-2">Acomodações</p>
           <h1 className="text-4xl font-bold" style={{ fontFamily: 'var(--font-display)' }}>Nossos Quartos</h1>
-          <p className="text-slate-400 mt-2">Escolha a acomodação perfeita para você</p>
         </div>
       </div>
 
@@ -141,6 +140,5 @@ function RoomsPage() {
   );
 }
 
-// ─── Room Detail Page ─────────────────────────────────────────────────────────
 
 export default RoomsPage;

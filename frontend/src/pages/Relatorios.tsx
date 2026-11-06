@@ -36,6 +36,5 @@ function ReportsPage() {
   );
 }
 
-// ─── Settings ─────────────────────────────────────────────────────────────────
 
 export default ReportsPage;

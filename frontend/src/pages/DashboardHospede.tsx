@@ -114,7 +114,7 @@ function GuestDashboardPage() {
                   </div>
                 ))}
                 <Button variant="ghost" size="sm" className="w-full mt-1 text-[#B8963E]" onClick={() => navigate({ id: 'my-reservations' })}>
-                  Ver todas →
+                  Ver todas 
                 </Button>
               </div>
             )}

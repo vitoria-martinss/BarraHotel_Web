@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { useApp } from '../store';
-import logozinha from './images/logozinha.png';
+import logo from './images/logo.png';
 
 interface PublicLayoutProps { children: ReactNode }
 
@@ -26,7 +26,7 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
             onClick={() => navigate({ id: 'home' })}
             className="flex items-center gap-2.5 group"
           >
-            <img src={logozinha} alt="Barra Hotel" className="w-10 h-10 object-contain rounded-lg bg-white/5" />            
+            <img src={logo} alt="Barra Hotel" className="w-10 h-10 object-contain rounded-lg bg-white/5" />            
             <div>
               <span className="font-bold text-lg tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>Barra Hotel</span>
               <div className="h-0.5 w-0 group-hover:w-full bg-[#B8963E] transition-all duration-300" />
@@ -84,10 +84,7 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-7 h-7 bg-[#B8963E] rounded-lg flex items-center justify-center">
-                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-                  </svg>
+                <div className="w-7 h-7 rounded-lg flex items-center justify-center">
                 </div>
                 <span className="font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>Barra Hotel</span>
               </div>
@@ -121,8 +118,8 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
             </div>
           </div>
           <div className="border-t border-slate-800 pt-5 flex flex-col sm:flex-row items-center justify-between gap-2">
-            <p className="text-xs text-slate-500">© 2026 Barra Hotel. Todos os direitos reservados.</p>
-            <p className="text-xs text-slate-600">CEP 13880-000</p>
+            <p className="text-xs text-slate-500">Todos os direitos reservados © 2026 Barra Hotel</p>
+            <p className="text-xs text-slate-600">CNPJ 18.696.154/0001-25</p>
           </div>
         </div>
       </footer>

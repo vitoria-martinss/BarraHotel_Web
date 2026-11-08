@@ -2,26 +2,27 @@ import { createContext, useContext, useState, ReactNode } from 'react';
 import { type Guest, type Employee } from './data';
 
 export type Page =
-  // Public
+  // Páginas públicas
   | { id: 'home' }
   | { id: 'rooms' }
   | { id: 'room-detail'; roomId: string }
   | { id: 'services' }
   | { id: 'about' }
   | { id: 'contact' }
-  // Auth
+
+  // Autenticação
   | { id: 'login' }
   | { id: 'register' }
   | { id: 'forgot-password' }
-  // Guest area
-  | { id: 'guest-dashboard' }
   | { id: 'booking'; step?: number; roomId?: string }
-  | { id: 'booking-success'; reservationCode?: string }
+
+  // Área do hóspede
+  | { id: 'booking'; step?: number; roomId?: string }
   | { id: 'my-reservations' }
   | { id: 'guest-profile' }
   | { id: 'guest-password' }
-  // Staff area
-  | { id: 'staff-dashboard' }
+
+  // Área da recepção
   | { id: 'staff-reservations' }
   | { id: 'staff-guests' }
   | { id: 'checkin' }
@@ -29,22 +30,34 @@ export type Page =
   | { id: 'staff-rooms' }
   | { id: 'housekeeping' }
   | { id: 'maintenance' }
-  // Admin area
-  | { id: 'admin-dashboard' }
+
+  // Área administrativa
   | { id: 'admin-rooms' }
   | { id: 'admin-categories' }
   | { id: 'admin-guests' }
   | { id: 'admin-reservations' }
   | { id: 'employees' }
-  | { id: 'financial' }
-  | { id: 'reports' }
   | { id: 'settings' }
   | { id: 'permissions' };
+
 
 export type AuthUser =
   | { type: 'guest'; data: Guest }
   | { type: 'staff'; data: Employee }
   | { type: 'admin'; data: Employee };
+
+export function getUserAreaPage(user: AuthUser): Page {
+  switch (user.type) {
+    case 'admin':
+      return { id: 'admin-rooms' };
+
+    case 'staff':
+      return { id: 'staff-reservations' };
+
+    case 'guest':
+      return { id: 'my-reservations' };
+  }
+}
 
 interface AppContextType {
   page: Page;
@@ -52,7 +65,6 @@ interface AppContextType {
   currentUser: AuthUser | null;
   login: (user: AuthUser) => void;
   logout: () => void;
-  notifications: number;
 }
 
 const AppContext = createContext<AppContextType | null>(null);
@@ -70,7 +82,6 @@ function lerSalvo<T>(chave: string, padrao: T): T {
 export function AppProvider({ children }: { children: ReactNode }) {
   const [page, setPage] = useState<Page>(() => lerSalvo<Page>('page', { id: 'home' }));
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(() => lerSalvo<AuthUser | null>('usuario', null));
-  const [unreadNotifications] = useState(3);
 
   function navigate(nextPage: Page) {
     setPage(nextPage);
@@ -79,12 +90,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }
 
   function login(user: AuthUser) {
-    setCurrentUser(user);
-    localStorage.setItem('usuario', JSON.stringify(user));
-    if (user.type === 'guest') navigate({ id: 'guest-dashboard' });
-    else if (user.type === 'admin') navigate({ id: 'admin-dashboard' });
-    else navigate({ id: 'staff-dashboard' });
-  }
+  setCurrentUser(user);
+
+  localStorage.setItem('usuario', JSON.stringify(user));
+
+  navigate(getUserAreaPage(user));
+ }
 
   function logout() {
     setCurrentUser(null);
@@ -94,7 +105,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <AppContext.Provider value={{ page, navigate, currentUser, login, logout, notifications: unreadNotifications }}>
+    <AppContext.Provider value={{ page, navigate, currentUser, login, logout }}>
       {children}
     </AppContext.Provider>
   );

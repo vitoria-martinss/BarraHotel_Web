@@ -1,6 +1,6 @@
-import DashboardLayout from '../layouts/DashboardLayout';
-import { STAFF_NAV } from '../config/navigation';
-import GestaoHospedes from '../components/GestaoHospedes';
+import DashboardLayout from '../../layouts/DashboardLayout';
+import { STAFF_NAV } from '../../config/navigation';
+import GestaoHospedes from '../../components/GestaoHospedes';
 
 function StaffGuestsPage() {
   return (

@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Button, Badge, Card, Table, Pagination, SearchBar, Modal, Alert, Input, Select, Dropdown } from '../ui';
+import { SetStateAction, useEffect, useState } from 'react';
+import { Button, Badge, Card, Table, Pagination, Modal, Alert, Input, Select, Dropdown } from '../ui';
 import EditarDatasReserva from './EditarDatasReserva';
 import {
   chamarApi,
@@ -170,7 +170,7 @@ export default function GestaoReservas({ podeExcluir }: { podeExcluir: boolean }
           <button
             key={status}
             onClick={() => { setFiltroStatus(filtroStatus === status ? '' : status); setPagina(1); }}
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border text-sm font-medium transition-all ${filtroStatus === status ? 'border-[#1B2B4B] bg-[#1B2B4B] text-white' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'}`}
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border text-sm font-medium transition-all ${filtroStatus === status ? 'border-navy-600 bg-navy-600 text-white' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'}`}
           >
             <span>{reservas.filter(r => r.status === status).length}</span>
             <span>{rotulosStatus[status]}</span>
@@ -179,14 +179,6 @@ export default function GestaoReservas({ podeExcluir }: { podeExcluir: boolean }
       </div>
 
       <Card className="p-5">
-        <div className="flex items-center gap-3 mb-5">
-          <SearchBar
-            value={busca}
-            onChange={valor => { setBusca(valor); setPagina(1); }}
-            placeholder="Buscar por código, hóspede, quarto..."
-            className="flex-1 max-w-sm"
-          />
-        </div>
 
         <Table
           loading={carregando}
@@ -198,7 +190,7 @@ export default function GestaoReservas({ podeExcluir }: { podeExcluir: boolean }
             { key: 'quarto', header: 'Quarto', render: r => <span className="text-sm">Quarto {r.quarto_numero} — {r.tipo_nome}</span> },
             { key: 'checkin', header: 'Check-in', render: r => <span className="text-sm font-mono-data">{formatarData(r.data_checkin)}</span> },
             { key: 'checkout', header: 'Check-out', render: r => <span className="text-sm font-mono-data">{formatarData(r.data_checkout)}</span> },
-            { key: 'valor', header: 'Valor', render: r => <span className="text-sm font-semibold text-[#B8963E]">{formatarMoeda(r.valor_total)}</span> },
+            { key: 'valor', header: 'Valor', render: r => <span className="text-sm font-semibold text-gold-500">{formatarMoeda(r.valor_total)}</span> },
             { key: 'pago', header: 'Pagamento', render: r => <Badge label={r.pago ? 'Pago' : 'Pendente'} /> },
             { key: 'status', header: 'Status', render: r => <Badge label={rotulosStatus[r.status]} /> },
             {

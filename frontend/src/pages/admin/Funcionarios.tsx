@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useApp } from '../store';
-import { Button, Card, Table, SearchBar, Modal, Alert, Input, Select } from '../ui';
-import DashboardLayout from '../layouts/DashboardLayout';
-import { ADMIN_NAV } from '../config/navigation';
-import { chamarApi, type Funcionario } from '../services/api';
-import { formatarData } from '../utils/formatters';
+import { useApp } from '../../store';
+import { Button, Card, Table, Modal, Alert, Input, Select } from '../../ui';
+import DashboardLayout from '../../layouts/DashboardLayout';
+import { ADMIN_NAV } from '../../config/navigation';
+import { chamarApi, type Funcionario } from '../../services/api';
+import { formatarData } from '../../utils/formatters';
 
 type Formulario = { nome: string; email: string; papel: Funcionario['papel']; senha: string };
 
@@ -120,28 +120,8 @@ function EmployeesPage() {
 
         {erro && !aberto && <Alert type="error" message={erro} onClose={() => setErro('')} />}
 
-        <div className="grid grid-cols-2 gap-4">
-          {(Object.keys(rotulos) as Funcionario['papel'][]).map(papel => {
-            const ativo = filtroPapel === papel;
-            const total = funcionarios.filter(f => f.papel === papel).length;
-            return (
-              <button
-                key={papel}
-                onClick={() => setFiltroPapel(ativo ? '' : papel)}
-                className={`rounded-xl p-4 text-left border transition-all ${ativo ? 'border-[#1B2B4B] bg-[#1B2B4B] text-white' : 'bg-white border-slate-100 hover:border-slate-200'}`}
-              >
-                <p className={`text-2xl font-bold ${ativo ? 'text-white' : 'text-slate-800'}`}>{total}</p>
-                <p className={`text-xs mt-0.5 ${ativo ? 'text-white/70' : 'text-slate-400'}`}>{rotulos[papel]}{total !== 1 ? 's' : ''}</p>
-              </button>
-            );
-          })}
-        </div>
 
         <Card className="p-5">
-          <div className="flex gap-3 mb-5">
-            <SearchBar value={busca} onChange={setBusca} className="flex-1 max-w-sm" />
-          </div>
-
           <Table
             loading={carregando}
             data={filtrados}
@@ -152,7 +132,7 @@ function EmployeesPage() {
                 header: 'Funcionário',
                 render: f => (
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-[#0E1825] text-white text-sm font-bold flex items-center justify-center">{f.nome.charAt(0)}</div>
+                    <div className="w-9 h-9 rounded-xl bg-navy-800 text-white text-sm font-bold flex items-center justify-center">{f.nome.charAt(0)}</div>
                     <div>
                       <p className="font-medium text-slate-800 text-sm">{f.nome}</p>
                       <p className="text-xs text-slate-400">{f.email}</p>

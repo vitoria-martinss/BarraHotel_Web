@@ -1,4 +1,3 @@
-// ─── Types ────────────────────────────────────────────────────────────────────
 
 export type RoomCategory = 'Single' | 'Casal' | 'Triplo' | 'Quádruplo';
 export type RoomSubcategory =
@@ -303,15 +302,6 @@ export const tasks: Task[] = [
   { id: 'T010', roomId: 'R031', type: 'Manutenção', employeeId: 'E008', date: '2025-08-22', time: '10:00', status: 'Pendente', priority: 'Baixa', notes: 'Substituição de torneira' },
 ];
 
-// ─── Notifications ────────────────────────────────────────────────────────────
-export const notifications: Notification[] = [
-  { id: 'N001', type: 'info', title: 'Nova reserva', message: 'Reserva BH-2025-030 criada por Gabriela Pinto Lemos', time: '10 min atrás', read: false },
-  { id: 'N002', type: 'warning', title: 'Check-out próximo', message: 'Quarto 309 com check-out previsto para hoje às 12:00', time: '30 min atrás', read: false },
-  { id: 'N003', type: 'success', title: 'Pagamento confirmado', message: 'Reserva BH-2025-007 paga via PIX — R$ 900,00', time: '1h atrás', read: false },
-  { id: 'N004', type: 'error', title: 'Manutenção urgente', message: 'Quarto 108: ar-condicionado com falha reportada', time: '2h atrás', read: true },
-  { id: 'N005', type: 'info', title: 'Check-in realizado', message: 'Hóspede Carlos Eduardo Martins — Quarto 201', time: '3h atrás', read: true },
-  { id: 'N006', type: 'warning', title: 'Reserva pendente', message: 'BH-2025-014 aguardando confirmação de pagamento', time: '4h atrás', read: true },
-];
 
 // ─── Analytics Data ───────────────────────────────────────────────────────────
 export const monthlyRevenue = [

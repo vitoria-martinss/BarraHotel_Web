@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, Badge, Card, Table, Pagination, SearchBar, Modal, Alert, Input } from '../ui';
+import { Button, Badge, Card, Table, Pagination, Modal, Alert, Input } from '../ui';
 import { chamarApi, type Hospede } from '../services/api';
 
 type Formulario = { nome: string; email: string; telefone: string; documento: string };
@@ -103,15 +103,6 @@ export default function GestaoHospedes({ podeExcluir }: { podeExcluir: boolean }
       {erro && !aberto && <Alert type="error" message={erro} onClose={() => setErro('')} />}
 
       <Card className="p-5">
-        <div className="flex items-center gap-3 mb-5">
-          <SearchBar
-            value={busca}
-            onChange={valor => { setBusca(valor); setPagina(1); }}
-            placeholder="Buscar por nome, e-mail ou documento..."
-            className="flex-1 max-w-sm"
-          />
-          <span className="text-sm text-slate-400">{filtrados.length} hóspede{filtrados.length !== 1 ? 's' : ''}</span>
-        </div>
 
         <Table
           loading={carregando}

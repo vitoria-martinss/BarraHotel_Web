@@ -1,124 +1,206 @@
-import { ReactNode } from 'react';
-import { useApp } from '../store';
-import logo from './images/logo.png';
+import { ReactNode } from "react";
+import { useApp, getUserAreaPage, type Page } from "../store";
 
-interface PublicLayoutProps { children: ReactNode }
+import logo from "./images/logo.png";
+
+interface PublicLayoutProps {
+  children: ReactNode;
+}
 
 export default function PublicLayout({ children }: PublicLayoutProps) {
   const { page, navigate, currentUser } = useApp();
+
   const pid = page.id;
 
-  const navLinks = [
-    { label: 'Início', id: 'home' },
-    { label: 'Quartos', id: 'rooms' },
-    { label: 'Serviços', id: 'services' },
-    { label: 'Sobre', id: 'about' },
-    { label: 'Contato', id: 'contact' },
+  // Links de navegação do site
+  const navLinks: { label: string; page: Page }[] = [
+    { label: "Início", page: { id: "home" } },
+    { label: "Quartos", page: { id: "rooms" } },
+    { label: "Serviços", page: { id: "services" } },
+    { label: "Sobre", page: { id: "about" } },
+    { label: "Contato", page: { id: "contact" } },
   ];
 
+  // Direciona para o cadastro ou para a reserva
+  function fazerReserva() {
+    if (!currentUser) {
+      navigate({ id: "register" });
+      return;
+    }
+
+    if (currentUser.type === "guest") {
+      navigate({ id: "booking" });
+      return;
+    }
+
+    // Funcionários e administradores não iniciam
+    // reservas como hóspedes.
+    navigate(getUserAreaPage(currentUser));
+  }
+
+  // Direciona para o login ou área do usuário
+  function entrar() {
+    if (!currentUser) {
+      navigate({ id: "login" });
+      return;
+    }
+
+    navigate(getUserAreaPage(currentUser));
+  }
+
   return (
-    <div className="min-h-screen flex flex-col" style={{ fontFamily: 'var(--font-body)' }}>
-      {/* Header */}
-      <header className="bg-[#0E1825] text-white sticky top-0 z-40 shadow-lg">
+    <div
+      className="min-h-screen flex flex-col"
+      style={{ fontFamily: "var(--font-body)" }}
+    >
+      {/* HEADER */}
+      <header className="bg-navy-800 text-white sticky top-0 z-40 shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          {/* Logo */}
+          {/* LOGO */}
           <button
-            onClick={() => navigate({ id: 'home' })}
+            onClick={() => navigate({ id: "home" })}
             className="flex items-center gap-2.5 group"
           >
-            <img src={logo} alt="Barra Hotel" className="w-10 h-10 object-contain rounded-lg bg-white/5" />            
+            <img
+              src={logo}
+              alt="Barra Hotel"
+              className="w-10 h-10 object-contain rounded-lg bg-white/5"
+            />
+
             <div>
-              <span className="font-bold text-lg tracking-wide" style={{ fontFamily: 'var(--font-display)' }}>Barra Hotel</span>
-              <div className="h-0.5 w-0 group-hover:w-full bg-[#B8963E] transition-all duration-300" />
+              <span
+                className="font-bold text-lg tracking-wide"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Barra Hotel
+              </span>
+
+              <div className="h-0.5 w-0 group-hover:w-full bg-gold-500 transition-all duration-300" />
             </div>
           </button>
 
-          {/* Nav */}
+          {/* NAVEGAÇÃO */}
           <nav className="hidden md:flex items-center gap-6">
-            {navLinks.map(link => (
+            {navLinks.map((link) => (
               <button
-                key={link.id}
-                onClick={() => navigate({ id: link.id as 'home' })}
-                className={`text-sm font-medium transition-colors ${pid === link.id ? 'text-[#D4AF6A]' : 'text-slate-300 hover:text-white'}`}
+                key={link.page.id}
+                onClick={() => navigate(link.page)}
+                className={`text-sm font-medium transition-colors ${
+                  pid === link.page.id
+                    ? "text-gold-300"
+                    : "text-slate-300 hover:text-white"
+                }`}
               >
                 {link.label}
               </button>
             ))}
           </nav>
 
-          {/* Actions */}
+          {/* BOTÕES DE ACESSO */}
           <div className="flex items-center gap-3">
-            {currentUser ? (
-              <button
-                onClick={() => navigate({ id: currentUser.type === 'guest' ? 'guest-dashboard' : currentUser.type === 'admin' ? 'admin-dashboard' : 'staff-dashboard' })}
-                className="flex items-center gap-2 bg-[#B8963E] hover:bg-[#9A7A2E] text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-              >
-                <span>Minha área</span>
-              </button>
-            ) : (
-              <>
-                <button
-                  onClick={() => navigate({ id: 'login' })}
-                  className="text-sm text-slate-300 hover:text-white transition-colors font-medium px-3 py-1.5"
-                >
-                  Entrar
-                </button>
-                <button
-                  onClick={() => navigate({ id: 'booking' })}
-                  className="bg-[#B8963E] hover:bg-[#9A7A2E] text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-                >
-                  Fazer reserva
-                </button>
-              </>
-            )}
+            {/* FAZER RESERVA */}
+            <button
+              onClick={fazerReserva}
+              className="bg-gold-500 hover:bg-gold-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+            >
+              Fazer reserva
+            </button>
+
+            {/* ENTRAR */}
+            <button
+              onClick={entrar}
+              className="border border-gold-500 text-gold-300 hover:bg-gold-500 hover:text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+            >
+              Entrar
+            </button>
           </div>
         </div>
       </header>
 
-      {/* Content */}
+      {/* CONTEÚDO DA PÁGINA */}
       <main className="flex-1">{children}</main>
 
-      {/* Footer */}
-      <footer className="bg-[#070E14] text-slate-300 pt-12 pb-6">
+      {/* FOOTER */}
+      <footer className="bg-navy-900 text-slate-300 pt-12 pb-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+            {/* IDENTIFICAÇÃO */}
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-7 h-7 rounded-lg flex items-center justify-center">
-                </div>
-                <span className="font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>Barra Hotel</span>
+                <span
+                  className="font-bold text-white"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  Barra Hotel
+                </span>
               </div>
             </div>
+
+            {/* NAVEGAÇÃO */}
             <div>
-              <h4 className="text-white font-semibold mb-4 text-sm">Navegação</h4>
+              <h4 className="text-white font-semibold mb-4 text-sm">
+                Navegação
+              </h4>
+
               <ul className="space-y-2">
-                {navLinks.map(l => (
-                  <li key={l.id}>
-                    <button onClick={() => navigate({ id: l.id as 'home' })} className="text-sm text-slate-400 hover:text-[#D4AF6A] transition-colors">{l.label}</button>
+                {navLinks.map((link) => (
+                  <li key={link.page.id}>
+                    <button
+                      onClick={() => navigate(link.page)}
+                      className="text-sm text-slate-400 hover:text-gold-300 transition-colors"
+                    >
+                      {link.label}
+                    </button>
                   </li>
                 ))}
               </ul>
             </div>
+
+            {/* CONTATO */}
             <div>
               <h4 className="text-white font-semibold mb-4 text-sm">Contato</h4>
+
               <ul className="space-y-2 text-sm text-slate-400">
-                <li>Av. Manoel Gomes Casaca, Nº 111 - Vila Santana, Vargem Grande do Sul/SP</li>
+                <li>
+                  Av. Manoel Gomes Casaca, Nº 111 - Vila Santana, Vargem Grande
+                  do Sul/SP
+                </li>
+
                 <li>(19) 98448-7235</li>
-                <li>(19) 98448-7235</li>
+
                 <li>reservasbarrahotel@gmail.com</li>
               </ul>
             </div>
+
+            {/* INSTITUCIONAL */}
             <div>
-              <h4 className="text-white font-semibold mb-4 text-sm">Institucional</h4>
+              <h4 className="text-white font-semibold mb-4 text-sm">
+                Institucional
+              </h4>
+
               <ul className="space-y-2">
-                {['Política de Privacidade', 'Termos de Uso', 'Trabalhe Conosco', 'Acessibilidade'].map(item => (
-                  <li key={item}><span className="text-sm text-slate-400 hover:text-[#D4AF6A] cursor-pointer transition-colors">{item}</span></li>
+                {[
+                  "Política de Privacidade",
+                  "Termos de Uso",
+                  "Trabalhe Conosco",
+                  "Acessibilidade",
+                ].map((item) => (
+                  <li key={item}>
+                    <span className="text-sm text-slate-400 hover:text-gold-300 cursor-pointer transition-colors">
+                      {item}
+                    </span>
+                  </li>
                 ))}
               </ul>
             </div>
           </div>
+
+          {/* DIREITOS RESERVADOS */}
           <div className="border-t border-slate-800 pt-5 flex flex-col sm:flex-row items-center justify-between gap-2">
-            <p className="text-xs text-slate-500">Todos os direitos reservados © 2026 Barra Hotel</p>
+            <p className="text-xs text-slate-500">
+              Todos os direitos reservados © 2026 Barra Hotel
+            </p>
+
             <p className="text-xs text-slate-600">CNPJ 18.696.154/0001-25</p>
           </div>
         </div>

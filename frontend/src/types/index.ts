@@ -1,1 +1,1 @@
-export type { Room, Guest, Reservation, Employee, Task, Notification } from '../data';
+export type { Room, Guest, Reservation, Employee, Task } from '../data';

@@ -69,7 +69,6 @@ Cada perfil de usuário terá acesso a funcionalidades específicas de acordo co
 * Controle de acesso por perfil.
 * Gerenciamento de dados pessoais.
 * Controle de permissões.
-* Gerenciamento de usuários pelos administradores.
 
 ### Hóspedes
 
@@ -89,7 +88,6 @@ Cada perfil de usuário terá acesso a funcionalidades específicas de acordo co
 * Cadastro das características dos quartos.
 * Controle de disponibilidade.
 * Atualização das informações dos quartos.
-* Gerenciamento dos quartos pelos funcionários e administradores.
 
 ### Reservas
 
@@ -116,7 +114,6 @@ Cada perfil de usuário terá acesso a funcionalidades específicas de acordo co
 * Gerenciamento de quartos.
 * Gerenciamento de reservas.
 * Controle de informações do sistema.
-* Visualização de informações para apoio à gestão.
 
 ---
 

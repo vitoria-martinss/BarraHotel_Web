@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import { useApp } from '../../store';
-import { Button, Card, Table, Modal, Alert, Input, Select } from '../../ui';
+import { useEffect, useState } from "react";
+import { useApp } from "../../store";
+import { Button, Card, Table, Modal, Alert, Input, Select } from "../../ui";
 import DashboardLayout from '../../layouts/DashboardLayout';
-import { ADMIN_NAV } from '../../config/navigation';
-import { chamarApi, type Funcionario } from '../../services/api';
-import { formatarData } from '../../utils/formatters';
+import { ADMIN_NAV } from "../../config/navigation";
+import { chamarApi, type Funcionario } from "../../services/api";
+import { formatarData } from "../../utils/formatters";
 
 type Formulario = { nome: string; email: string; papel: Funcionario['papel']; senha: string };
 
@@ -29,7 +29,7 @@ function mensagem(falha: unknown) {
   return falha instanceof Error ? falha.message : 'Erro inesperado';
 }
 
-function EmployeesPage() {
+function Funcionarios() {
   const { currentUser } = useApp();
   const [funcionarios, setFuncionarios] = useState<Funcionario[]>([]);
   const [carregando, setCarregando] = useState(true);
@@ -122,8 +122,21 @@ function EmployeesPage() {
 
 
         <Card className="p-5">
+          <div className="flex items-end gap-3 mb-5 flex-wrap">
+            <Input
+              wrapperClassName="w-full max-w-sm"
+              placeholder="Buscar por nome ou e-mail"
+              value={busca}
+              onChange={e => setBusca(e.target.value)}
+            />
+            <Select
+              options={[{ value: '', label: 'Todos os cargos' }, ...opcoesPapel]}
+              value={filtroPapel}
+              onChange={e => setFiltroPapel(e.target.value)}
+            />
+          </div>
           <Table
-            loading={carregando}
+            carregando={carregando}
             data={filtrados}
             emptyMessage="Nenhum funcionário encontrado"
             columns={[
@@ -183,7 +196,7 @@ function EmployeesPage() {
           />
           <div className="flex justify-end gap-2 pt-2">
             <Button type="button" variant="ghost" onClick={fechar}>Cancelar</Button>
-            <Button type="submit" variant="primary" loading={salvando}>Salvar</Button>
+            <Button type="submit" variant="primary" carregando={salvando}>Salvar</Button>
           </div>
         </form>
       </Modal>
@@ -201,4 +214,4 @@ function EmployeesPage() {
   );
 }
 
-export default EmployeesPage;
+export default Funcionarios;

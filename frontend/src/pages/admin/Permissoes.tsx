@@ -1,56 +1,11 @@
 import { useState } from "react";
-import {
-  BarChart,
-  Bar,
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-} from "recharts";
-import { useApp } from "../../store";
-import {
-  rooms,
-  guests,
-  reservations,
-  employees,
-  tasks,
-  monthlyRevenue,
-  occupancyData,
-  weeklyCheckins,
-  getGuestById,
-  getRoomById,
-  getEmployeeById,
-  formatCurrency,
-  formatDate,
-  type RoomCategory,
-} from "../../data";
-import {
-  Button,
-  Badge,
-  Card,
-  StatCard,
-  Table,
-  Pagination,
-  Modal,
-  Alert,
-  Tabs,
-  EmptyState,
-  Dropdown,
-} from "../../ui";
+import { Button, Card } from "../../ui";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import { ADMIN_NAV } from "../../config/navigation";
 
-function PermissionsPage() {
+function Permissoes() {
   const roles = ["Administrador", "Recepcionista"];
   const perms = [
-    "Ver dashboard",
     "Gerenciar reservas",
     "Check-in/Check-out",
     "Ver hóspedes",
@@ -64,7 +19,6 @@ function PermissionsPage() {
       perms.map((p) => [
         p,
         [
-          "Ver dashboard",
           "Gerenciar reservas",
           "Check-in/Check-out",
           "Ver hóspedes",
@@ -156,4 +110,4 @@ function PermissionsPage() {
   );
 }
 
-export default PermissionsPage;
+export default Permissoes;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useApp } from "../../store";
-import { Button, Badge, Card, Input, Select } from "../../ui";
+import { Button } from "../../ui";
 import PublicLayout from "../../layouts/PublicLayout";
 import type { Room } from "../../data";
 import {
@@ -12,7 +12,7 @@ import {
 import { QuartoCard } from "../../components/QuartoCard";
 import { formatarMoeda } from "../../utils/formatters";
 
-function RoomDetailPage({ roomId }: { roomId: string }) {
+function QuartoDetalhes({ roomId }: { roomId: string }) {
   const { navigate, currentUser } = useApp();
   const [rooms, setRooms] = useState<Room[]>([]);
   const [carregando, setCarregando] = useState(true);
@@ -52,7 +52,7 @@ function RoomDetailPage({ roomId }: { roomId: string }) {
 
   return (
     <PublicLayout>
-      {/* Hero image */}
+
       <div className="relative h-80 md:h-[28rem] bg-slate-200">
         {room.photo && (
           <img
@@ -75,18 +75,17 @@ function RoomDetailPage({ roomId }: { roomId: string }) {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
-        {/* Breadcrumb */}
         <nav className="flex gap-2 text-sm text-slate-400 mb-8">
           <button
             onClick={() => navigate({ id: "home" })}
-            className="hover:text-[#1B2B4B]"
+            className="hover:text-navy-600"
           >
             Início
           </button>
           <span>/</span>
           <button
             onClick={() => navigate({ id: "rooms" })}
-            className="hover:text-[#1B2B4B]"
+            className="hover:text-navy-600"
           >
             Quartos
           </button>
@@ -95,9 +94,7 @@ function RoomDetailPage({ roomId }: { roomId: string }) {
         </nav>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Details */}
           <div className="lg:col-span-2 space-y-8">
-            {/* Quick specs */}
             <div className="grid grid-cols-3 gap-4">
               {[
                 {
@@ -119,7 +116,6 @@ function RoomDetailPage({ roomId }: { roomId: string }) {
               ))}
             </div>
 
-            {/* Description */}
             <div>
               <h2
                 className="text-xl font-bold text-slate-800 mb-3"
@@ -133,11 +129,11 @@ function RoomDetailPage({ roomId }: { roomId: string }) {
             </div>
           </div>
 
-          {/* Booking card */}
+
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl border border-slate-100 shadow-lg p-5 sticky top-20">
               <div className="flex items-baseline justify-between mb-1">
-                <span className="text-3xl font-bold text-[#B8963E]">
+                <span className="text-3xl font-bold text-gold-500">
                   {formatarMoeda(room.dailyRate)}
                 </span>
                 <span className="text-sm text-slate-400">/diária</span>
@@ -151,7 +147,7 @@ function RoomDetailPage({ roomId }: { roomId: string }) {
                   </label>
                   <input
                     type="date"
-                    className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B8963E]/30"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-500/30"
                   />
                 </div>
                 <div>
@@ -160,7 +156,7 @@ function RoomDetailPage({ roomId }: { roomId: string }) {
                   </label>
                   <input
                     type="date"
-                    className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B8963E]/30"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-500/30"
                   />
                 </div>
                 <div>
@@ -194,7 +190,7 @@ function RoomDetailPage({ roomId }: { roomId: string }) {
                   É necessário{" "}
                   <button
                     onClick={() => navigate({ id: "login" })}
-                    className="text-[#B8963E] underline"
+                    className="text-gold-500 underline"
                   >
                     fazer login
                   </button>{" "}
@@ -205,7 +201,6 @@ function RoomDetailPage({ roomId }: { roomId: string }) {
           </div>
         </div>
 
-        {/* Similar rooms */}
         {similar.length > 0 && (
           <div className="mt-12">
             <h2
@@ -230,4 +225,4 @@ function RoomDetailPage({ roomId }: { roomId: string }) {
   );
 }
 
-export default RoomDetailPage;
+export default QuartoDetalhes;

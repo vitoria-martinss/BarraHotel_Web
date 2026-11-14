@@ -19,7 +19,7 @@ function noites(reserva: Reserva) {
   );
 }
 
-function MyReservationsPage() {
+function MinhasReservas() {
   const [reservas, setReservas] = useState<Reserva[]>([]);
   const [aba, setAba] = useState("todas");
   const [erro, setErro] = useState("");
@@ -184,4 +184,4 @@ function MyReservationsPage() {
   );
 }
 
-export default MyReservationsPage;
+export default MinhasReservas;

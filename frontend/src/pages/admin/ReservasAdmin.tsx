@@ -2,7 +2,7 @@ import DashboardLayout from "../../layouts/DashboardLayout";
 import { ADMIN_NAV } from "../../config/navigation";
 import GestaoReservas from "../../components/GestaoReservas";
 
-function AdminReservationsPage() {
+function ReservasAdmin() {
   return (
     <DashboardLayout
       title="Painel Administrativo"
@@ -14,4 +14,4 @@ function AdminReservationsPage() {
   );
 }
 
-export default AdminReservationsPage;
+export default ReservasAdmin;

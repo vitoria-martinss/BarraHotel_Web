@@ -1,46 +1,20 @@
 import { useState } from "react";
-import { useApp } from "../../store";
-import {
-  rooms,
-  guests,
-  reservations,
-  tasks,
-  employees,
-  getGuestById,
-  getRoomById,
-  getEmployeeById,
-  formatCurrency,
-  formatDate,
-  STATUS_COLORS,
-  type Reservation,
-} from "../../data";
-import {
-  Button,
-  Badge,
-  Card,
-  StatCard,
-  Table,
-  Pagination,
-  Modal,
-  Alert,
-  Tabs,
-  EmptyState,
-  Dropdown,
-} from "../../ui";
+import { reservations, getGuestById, getRoomById, type Reservation } from "../../data";
+import { Button, Badge, Card, EmptyState } from "../../ui";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import { STAFF_NAV } from "../../config/navigation";
+import { formatarData } from "@/utils/formatters";
 
-function CheckInPage() {
-  const [selected, setSelected] = useState<Reservation | null>(null);
+function CheckIn() {
   const [done, setDone] = useState<string[]>([]);
   const incoming = reservations.filter((r) =>
     ["Confirmada", "Pendente"].includes(r.status),
   );
 
-  async function handleCheckin(res: Reservation) {
-    await new Promise((r) => setTimeout(r, 600));
+  // Esta tela ainda usa reservas de exemplo (data.ts): o check-in só muda o estado local.
+  // Quando a API tiver o status "check-in", troque por uma chamada com chamarApi().
+  function fazerCheckin(res: Reservation) {
     setDone((prev) => [...prev, res.id]);
-    setSelected(null);
   }
 
   return (
@@ -95,13 +69,13 @@ function CheckInPage() {
                   <div>
                     <p className="text-xs text-slate-400">CHECK-IN</p>
                     <p className="font-semibold text-slate-800">
-                      {formatDate(res.checkIn)}
+                      {formatarData(res.checkIn)}
                     </p>
                   </div>
                   <div>
                     <p className="text-xs text-slate-400">CHECK-OUT</p>
                     <p className="font-semibold text-slate-800">
-                      {formatDate(res.checkOut)}
+                      {formatarData(res.checkOut)}
                     </p>
                   </div>
                 </div>
@@ -118,7 +92,7 @@ function CheckInPage() {
                   variant={isDone ? "ghost" : "primary"}
                   className="w-full"
                   disabled={isDone}
-                  onClick={() => handleCheckin(res)}
+                  onClick={() => fazerCheckin(res)}
                 >
                   {isDone ? "✓ Check-in realizado" : "Realizar Check-in"}
                 </Button>
@@ -140,4 +114,4 @@ function CheckInPage() {
   );
 }
 
-export default CheckInPage;
+export default CheckIn;

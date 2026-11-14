@@ -4,10 +4,10 @@ import { chamarApi, mensagemDeErro } from "../../services/api";
 import { Button, Input, Alert } from "../../ui";
 import PublicLayout from "../../layouts/PublicLayout";
 
-function RegisterPage() {
+function Cadastro() {
   const { navigate, login } = useApp();
   const [step, setStep] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [carregando, setCarregando] = useState(false);
   const [erro, setErro] = useState("");
   const [form, setForm] = useState({
     name: "",
@@ -28,7 +28,7 @@ function RegisterPage() {
     confirmPassword: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [showPw, setShowPw] = useState(false);
+  const [mostrarSenha, setMostrarSenha] = useState(false);
 
   function update(field: string, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -66,11 +66,11 @@ function RegisterPage() {
     return Object.keys(errs).length === 0;
   }
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function aoEnviar(e: React.FormEvent) {
     e.preventDefault();
     if (!validateStep3()) return;
     setErro("");
-    setLoading(true);
+    setCarregando(true);
     try {
       const { token, usuario } = await chamarApi<{
         token: string;
@@ -97,7 +97,7 @@ function RegisterPage() {
     } catch (falha) {
       setErro(mensagemDeErro(falha));
     }
-    setLoading(false);
+    setCarregando(false);
   }
 
   const brazilianStates = [
@@ -135,14 +135,14 @@ function RegisterPage() {
       <div className="min-h-[80vh] flex items-center justify-center py-12 px-4">
         <div className="w-full max-w-xl">
           <div className="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
-            {/* Header */}
+
             <div className="bg-navy-600 px-8 py-5">
               <h1 className="text-xl font-bold text-white">Criar sua conta</h1>
               <p className="text-slate-400 text-sm mt-0.5">
                 Preencha seus dados para se cadastrar
               </p>
 
-              {/* Steps indicator */}
+
               <div className="flex items-center gap-2 mt-4">
                 {["Dados pessoais", "Endereço", "Senha"].map((label, i) => (
                   <div key={i} className="flex items-center gap-2">
@@ -336,7 +336,7 @@ function RegisterPage() {
               )}
 
               {step === 3 && (
-                <form className="space-y-4" onSubmit={handleSubmit}>
+                <form className="space-y-4" onSubmit={aoEnviar}>
                   <h2 className="font-semibold text-slate-800">Criar senha</h2>
                   {erro && (
                     <Alert
@@ -351,7 +351,7 @@ function RegisterPage() {
                     </label>
                     <div className="relative">
                       <input
-                        type={showPw ? "text" : "password"}
+                        type={mostrarSenha ? "text" : "password"}
                         value={form.password}
                         onChange={(e) => update("password", e.target.value)}
                         placeholder="Mínimo 6 caracteres"
@@ -359,7 +359,7 @@ function RegisterPage() {
                       />
                       <button
                         type="button"
-                        onClick={() => setShowPw(!showPw)}
+                        onClick={() => setMostrarSenha(!mostrarSenha)}
                         className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400"
                       >
                         <svg
@@ -392,7 +392,7 @@ function RegisterPage() {
                       Confirmar senha *
                     </label>
                     <input
-                      type={showPw ? "text" : "password"}
+                      type={mostrarSenha ? "text" : "password"}
                       value={form.confirmPassword}
                       onChange={(e) =>
                         update("confirmPassword", e.target.value)
@@ -407,7 +407,7 @@ function RegisterPage() {
                     )}
                   </div>
 
-                  {/* Password strength hint */}
+
                   {form.password.length > 0 && (
                     <div className="bg-slate-50 rounded-lg p-3 text-xs space-y-1">
                       {[
@@ -447,7 +447,7 @@ function RegisterPage() {
                     <Button
                       type="submit"
                       variant="primary"
-                      loading={loading}
+                      carregando={carregando}
                       className="flex-1"
                     >
                       Criar conta
@@ -473,4 +473,4 @@ function RegisterPage() {
   );
 }
 
-export default RegisterPage;
+export default Cadastro;

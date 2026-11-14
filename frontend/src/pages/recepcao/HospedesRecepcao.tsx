@@ -1,8 +1,8 @@
 import DashboardLayout from '../../layouts/DashboardLayout';
-import { STAFF_NAV } from '../../config/navigation';
+import { STAFF_NAV } from "../../config/navigation";
 import GestaoHospedes from '../../components/GestaoHospedes';
 
-function StaffGuestsPage() {
+function HospedesRecepcao() {
   return (
     <DashboardLayout title="Área de Funcionários" navItems={STAFF_NAV} area="staff">
       <GestaoHospedes podeExcluir={false} />
@@ -10,4 +10,4 @@ function StaffGuestsPage() {
   );
 }
 
-export default StaffGuestsPage;
+export default HospedesRecepcao;

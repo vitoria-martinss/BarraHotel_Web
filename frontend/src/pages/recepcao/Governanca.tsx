@@ -1,37 +1,11 @@
 import { useState } from "react";
-import { useApp } from "../../store";
-import {
-  rooms,
-  guests,
-  reservations,
-  tasks,
-  employees,
-  getGuestById,
-  getRoomById,
-  getEmployeeById,
-  formatCurrency,
-  formatDate,
-  STATUS_COLORS,
-  type Reservation,
-} from "../../data";
-import {
-  Button,
-  Badge,
-  Card,
-  StatCard,
-  Table,
-  Pagination,
-  SearchBar,
-  Modal,
-  Alert,
-  Tabs,
-  EmptyState,
-  Dropdown,
-} from "../../ui";
+import { tasks, getRoomById, getEmployeeById } from "../../data";
+import { Button, Badge, Card, Tabs } from "../../ui";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import { STAFF_NAV } from "../../config/navigation";
+import { formatarData } from "@/utils/formatters";
 
-function HousekeepingPage() {
+function Governanca() {
   const [activeTab, setActiveTab] = useState("limpeza");
 
   const limpeza = tasks.filter((t) => t.type === "Limpeza");
@@ -121,7 +95,7 @@ function HousekeepingPage() {
                       Data/Hora
                     </span>
                     <span className="text-xs">
-                      {formatDate(task.date)} às {task.time}
+                      {formatarData(task.date)} às {task.time}
                     </span>
                   </div>
                   {task.notes && (
@@ -168,4 +142,4 @@ function HousekeepingPage() {
   );
 }
 
-export default HousekeepingPage;
+export default Governanca;

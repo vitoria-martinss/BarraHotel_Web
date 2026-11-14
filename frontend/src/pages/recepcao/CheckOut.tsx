@@ -1,36 +1,11 @@
 import { useState } from "react";
-import { useApp } from "../../store";
-import {
-  rooms,
-  guests,
-  reservations,
-  tasks,
-  employees,
-  getGuestById,
-  getRoomById,
-  getEmployeeById,
-  formatCurrency,
-  formatDate,
-  STATUS_COLORS,
-  type Reservation,
-} from "../../data";
-import {
-  Button,
-  Badge,
-  Card,
-  StatCard,
-  Table,
-  Pagination,
-  Modal,
-  Alert,
-  Tabs,
-  EmptyState,
-  Dropdown,
-} from "../../ui";
+import { reservations, getGuestById, getRoomById } from "../../data";
+import { Button, Badge, Card, EmptyState } from "../../ui";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import { STAFF_NAV } from "../../config/navigation";
+import { formatarMoeda, formatarData } from "@/utils/formatters";
 
-function CheckOutPage() {
+function CheckOut() {
   const [done, setDone] = useState<string[]>([]);
   const active = reservations.filter((r) => r.status === "Em hospedagem");
 
@@ -77,13 +52,13 @@ function CheckOutPage() {
                   <div>
                     <p className="text-xs text-slate-400">CHECK-IN</p>
                     <p className="font-semibold text-slate-800">
-                      {formatDate(res.checkIn)}
+                      {formatarData(res.checkIn)}
                     </p>
                   </div>
                   <div>
                     <p className="text-xs text-slate-400">CHECK-OUT</p>
                     <p className="font-semibold text-slate-800">
-                      {formatDate(res.checkOut)}
+                      {formatarData(res.checkOut)}
                     </p>
                   </div>
                   <div>
@@ -106,7 +81,7 @@ function CheckOutPage() {
                       Valor total
                     </span>
                     <span className="text-xl font-bold text-gold-500">
-                      {formatCurrency(res.total)}
+                      {formatarMoeda(res.total)}
                     </span>
                   </div>
                 </div>
@@ -143,4 +118,4 @@ function CheckOutPage() {
   );
 }
 
-export default CheckOutPage;
+export default CheckOut;

@@ -1,14 +1,11 @@
-import { useState } from "react";
-import { useApp } from "../../store";
-import { Button, Badge, Card, Input, Select } from "../../ui";
 import PublicLayout from "../../layouts/PublicLayout";
 
-function ServicesPage() {
+function Servicos() {
   return (
     <PublicLayout>
-      <div className="bg-[#0E1825] text-white py-12">
+      <div className="bg-navy-800 text-white py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <p className="text-[#D4AF6A] text-sm font-medium tracking-widest uppercase mb-2">
+          <p className="text-gold-300 text-sm font-medium tracking-widest uppercase mb-2">
             Infraestrutura
           </p>
           <h1
@@ -28,7 +25,7 @@ function ServicesPage() {
             },
             {
               title: "Café da Manhã Incluso",
-              desc: "Buffet completo servido diariamente das 6h às 10h, com opções quentes, frias, sucos naturais e frutas frescas.",
+              desc: "Café completo servido diariamente das 6h às 10h, com opções quentes, frias, sucos naturais e frutas frescas.",
             },
             {
               title: "Garagem",
@@ -73,4 +70,4 @@ function ServicesPage() {
   );
 }
 
-export default ServicesPage;
+export default Servicos;

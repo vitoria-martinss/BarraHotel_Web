@@ -23,7 +23,7 @@ function mensagem(falha: unknown) {
   return falha instanceof Error ? falha.message : "Erro inesperado";
 }
 
-function AdminCategoriesPage() {
+function Categorias() {
   const [tipos, setTipos] = useState<TipoQuarto[]>([]);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState("");
@@ -154,7 +154,7 @@ function AdminCategoriesPage() {
 
         <Card className="p-2">
           <Table
-            loading={carregando}
+            carregando={carregando}
             data={tipos}
             emptyMessage="Nenhum tipo de quarto cadastrado"
             columns={[
@@ -324,7 +324,7 @@ function AdminCategoriesPage() {
             <Button type="button" variant="ghost" onClick={fechar}>
               Cancelar
             </Button>
-            <Button type="submit" variant="primary" loading={salvando}>
+            <Button type="submit" variant="primary" carregando={salvando}>
               Salvar
             </Button>
           </div>
@@ -354,4 +354,4 @@ function AdminCategoriesPage() {
   );
 }
 
-export default AdminCategoriesPage;
+export default Categorias;

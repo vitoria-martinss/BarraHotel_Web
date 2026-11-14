@@ -1,38 +1,14 @@
 import { useState } from "react";
-import { useApp } from "../../store";
-import {
-  rooms,
-  reservations,
-  getReservationsByGuestId,
-  getGuestById,
-  getRoomById,
-  formatCurrency,
-  formatDate,
-  type Room,
-} from "../../data";
-import {
-  Button,
-  Badge,
-  Card,
-  StatCard,
-  Table,
-  Pagination,
-  Modal,
-  Alert,
-  Tabs,
-  EmptyState,
-  Breadcrumb,
-  Input,
-} from "../../ui";
+import { Button, Card, Alert, Input } from "../../ui";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import { GUEST_NAV } from "../../config/navigation";
 
-function GuestPasswordPage() {
+function AlterarSenha() {
   const [form, setForm] = useState({ current: "", next: "", confirm: "" });
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function aoEnviar(e: React.FormEvent) {
     e.preventDefault();
     setError("");
     if (form.next.length < 6)
@@ -61,7 +37,7 @@ function GuestPasswordPage() {
             />
           )}
           {error && <Alert type="error" message={error} className="mb-4" />}
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={aoEnviar} className="space-y-4">
             <Input
               label="Senha atual"
               type="password"
@@ -97,4 +73,4 @@ function GuestPasswordPage() {
   );
 }
 
-export default GuestPasswordPage;
+export default AlterarSenha;

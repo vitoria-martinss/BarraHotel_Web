@@ -2,7 +2,7 @@ import DashboardLayout from "../../layouts/DashboardLayout";
 import { ADMIN_NAV } from "../../config/navigation";
 import GestaoHospedes from "../../components/GestaoHospedes";
 
-function AdminGuestsPage() {
+function HospedesAdmin() {
   return (
     <DashboardLayout
       title="Painel Administrativo"
@@ -14,4 +14,4 @@ function AdminGuestsPage() {
   );
 }
 
-export default AdminGuestsPage;
+export default HospedesAdmin;

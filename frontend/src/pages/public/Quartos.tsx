@@ -9,9 +9,10 @@ import {
 } from "../../services/api";
 import PublicLayout from "../../layouts/PublicLayout";
 import { QuartoCard } from "../../components/QuartoCard";
+import { Alert } from "../../ui";
 
-function RoomsPage() {
-  const { navigate, currentUser } = useApp();
+function Quartos() {
+  const { navigate } = useApp();
   const [rooms, setRooms] = useState<Room[]>([]);
   const [category, setCategory] = useState("");
   const [status, setStatus] = useState("");
@@ -43,7 +44,7 @@ function RoomsPage() {
 
   return (
     <PublicLayout>
-      <div className="bg-navy-800 text-white py-12">
+      <div className="bg-navy-800 text-white py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <p className="text-gold-300 text-sm font-medium tracking-widest uppercase mb-2">
             Acomodações
@@ -58,7 +59,8 @@ function RoomsPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-        {/* Category tabs */}
+        {erro && <Alert type="error" message={erro} onClose={() => setErro("")} className="mb-4" />}
+
         <div className="flex gap-2 flex-wrap mb-6">
           <button
             onClick={() => setCategory("")}
@@ -78,20 +80,11 @@ function RoomsPage() {
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Filters sidebar */}
+
           <aside className="w-full lg:w-64 shrink-0">
             <div className="bg-white rounded-2xl p-5 border border-slate-100 space-y-5">
               <h3 className="font-semibold text-slate-800">Filtros</h3>
               <div>
-                <label className="text-sm font-medium text-slate-600 block mb-2">
-                  Buscar
-                </label>
-                <input
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Tipo ou número..."
-                  className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-500/30"
-                />
               </div>
               <div>
                 <label className="text-sm font-medium text-slate-600 block mb-2">
@@ -139,7 +132,6 @@ function RoomsPage() {
             </div>
           </aside>
 
-          {/* Rooms grid */}
           <div className="flex-1">
             <div className="flex items-center justify-between mb-4">
               <p className="text-sm text-slate-500">
@@ -175,4 +167,4 @@ function RoomsPage() {
   );
 }
 
-export default RoomsPage;
+export default Quartos;

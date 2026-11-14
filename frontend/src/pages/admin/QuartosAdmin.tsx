@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   Badge,
@@ -12,11 +12,7 @@ import {
 } from "../../ui";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import { ADMIN_NAV } from "../../config/navigation";
-import {
-  chamarApi,
-  type QuartoFisico,
-  type TipoQuarto,
-} from "../../services/api";
+import { chamarApi, type QuartoFisico, type TipoQuarto } from "../../services/api";
 import { formatarMoeda } from "../../utils/formatters";
 
 type Formulario = { numero: string; tipo_id: string };
@@ -27,7 +23,7 @@ function mensagem(falha: unknown) {
   return falha instanceof Error ? falha.message : "Erro inesperado";
 }
 
-function AdminRoomsPage() {
+function QuartosAdmin() {
   const [quartos, setQuartos] = useState<QuartoFisico[]>([]);
   const [tipos, setTipos] = useState<TipoQuarto[]>([]);
   const [carregando, setCarregando] = useState(true);
@@ -79,7 +75,7 @@ function AdminRoomsPage() {
   const ocupados = quartos.filter((q) => q.ocupado).length;
 
   const resumo = [
-    { rotulo: "Total", valor: quartos.length, cor: "#1B2B4B" },
+    { rotulo: "Total", valor: quartos.length, cor: "#0e1825" },
     { rotulo: "Ocupados", valor: ocupados, cor: "#F59E0B" },
     { rotulo: "Disponíveis", valor: quartos.length - ocupados, cor: "#10B981" },
   ];
@@ -178,6 +174,15 @@ function AdminRoomsPage() {
 
         <Card className="p-5">
           <div className="flex items-center gap-3 mb-5 flex-wrap">
+            <Input
+              wrapperClassName="w-full max-w-xs"
+              placeholder="Buscar por número ou tipo"
+              value={busca}
+              onChange={(e) => {
+                setBusca(e.target.value);
+                setPagina(1);
+              }}
+            />
             <select
               value={filtroTipo}
               onChange={(e) => {
@@ -196,7 +201,7 @@ function AdminRoomsPage() {
           </div>
 
           <Table
-            loading={carregando}
+            carregando={carregando}
             data={paginados}
             emptyMessage="Nenhum quarto cadastrado"
             columns={[
@@ -316,7 +321,7 @@ function AdminRoomsPage() {
             <Button
               type="submit"
               variant="primary"
-              loading={salvando}
+              carregando={salvando}
               disabled={tipos.length === 0}
             >
               Salvar
@@ -348,4 +353,4 @@ function AdminRoomsPage() {
   );
 }
 
-export default AdminRoomsPage;
+export default QuartosAdmin;

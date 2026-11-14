@@ -2,7 +2,7 @@ import DashboardLayout from "../../layouts/DashboardLayout";
 import { STAFF_NAV } from "../../config/navigation";
 import GestaoReservas from "../../components/GestaoReservas";
 
-function StaffReservationsPage() {
+function ReservasRecepcao() {
   return (
     <DashboardLayout
       title="Área de Funcionários"
@@ -14,4 +14,4 @@ function StaffReservationsPage() {
   );
 }
 
-export default StaffReservationsPage;
+export default ReservasRecepcao;

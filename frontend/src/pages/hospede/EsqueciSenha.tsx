@@ -1,21 +1,31 @@
 import { useState } from "react";
 import { useApp } from "../../store";
-import { guests, employees } from "../../data";
 import { Button, Input, Alert } from "../../ui";
 import PublicLayout from "../../layouts/PublicLayout";
+import { chamarApi } from "@/services/api";
 
-function ForgotPasswordPage() {
+function EsqueciSenha() {
   const { navigate } = useApp();
   const [email, setEmail] = useState("");
-  const [sent, setSent] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [enviado, setEnviado] = useState(false);
+  const [erro, setErro] = useState("");
+  const [carregando, setCarregando] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function aoEnviar(e: React.FormEvent) {
     e.preventDefault();
-    setLoading(true);
-    await new Promise((r) => setTimeout(r, 800));
-    setSent(true);
-    setLoading(false);
+    setErro("");
+    setCarregando(true);
+    try {
+      // Ajuste a rota para a que existir no backend.
+      await chamarApi("/api/auth/esqueci-senha", {
+        method: "POST",
+        body: JSON.stringify({ email }),
+      });
+      setEnviado(true);
+    } catch (falha) {
+      setErro(falha instanceof Error ? falha.message : "Não foi possível enviar o e-mail.");
+    }
+    setCarregando(false);
   }
 
   return (
@@ -24,7 +34,6 @@ function ForgotPasswordPage() {
         <div className="w-full max-w-md">
           <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-8">
             <div className="text-center mb-6">
-              <div className="w-14 h-10 rounded-2xl flex items-center justify-center mx-auto mb-3"></div>
               <h1
                 className="text-xl font-bold text-slate-800"
                 style={{ fontFamily: "var(--font-display)" }}
@@ -36,7 +45,7 @@ function ForgotPasswordPage() {
               </p>
             </div>
 
-            {sent ? (
+            {enviado ? (
               <div className="text-center">
                 <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg
@@ -68,25 +77,21 @@ function ForgotPasswordPage() {
                 </Button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="flex flex-col gap-1">
-                  <label className="text-sm font-medium text-slate-700">
-                    E-mail cadastrado
-                  </label>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="seu@email.com"
-                    required
-                    className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-500/40"
-                  />
-                </div>
+              <form onSubmit={aoEnviar} className="space-y-4">
+                {erro && <Alert type="error" message={erro} onClose={() => setErro("")} />}
+                <Input
+                  label="E-mail cadastrado"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="seu@email.com"
+                  required
+                />
                 <Button
                   type="submit"
                   variant="primary"
                   size="lg"
-                  loading={loading}
+                  carregando={carregando}
                   className="w-full"
                 >
                   Enviar link de recuperação
@@ -108,4 +113,4 @@ function ForgotPasswordPage() {
   );
 }
 
-export default ForgotPasswordPage;
+export default EsqueciSenha;

@@ -14,7 +14,7 @@ function dataLocal(data: Date) {
     .split("T")[0];
 }
 
-function BookingPage({ initialRoomId }: { initialRoomId?: string }) {
+function NovaReserva({ initialRoomId }: { initialRoomId?: string }) {
   const { navigate } = useApp();
   const [passo, setPasso] = useState(1);
   const [checkin, setCheckin] = useState("");
@@ -162,7 +162,7 @@ function BookingPage({ initialRoomId }: { initialRoomId?: string }) {
                 variant="primary"
                 size="lg"
                 onClick={pesquisar}
-                loading={carregando}
+                carregando={carregando}
                 disabled={noites < 1}
               >
                 Ver disponibilidade
@@ -316,7 +316,7 @@ function BookingPage({ initialRoomId }: { initialRoomId?: string }) {
               <Button
                 variant="secondary"
                 onClick={confirmar}
-                loading={carregando}
+                carregando={carregando}
                 className="flex-1"
               >
                 Confirmar reserva
@@ -380,4 +380,4 @@ function BookingPage({ initialRoomId }: { initialRoomId?: string }) {
   );
 }
 
-export default BookingPage;
+export default NovaReserva;

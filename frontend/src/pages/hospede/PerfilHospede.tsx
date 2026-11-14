@@ -1,40 +1,21 @@
 import { useState } from "react";
 import { useApp } from "../../store";
-import {
-  rooms,
-  reservations,
-  getReservationsByGuestId,
-  getGuestById,
-  getRoomById,
-  formatCurrency,
-  formatDate,
-  type Room,
-} from "../../data";
-import {
-  Button,
-  Badge,
-  Card,
-  StatCard,
-  Table,
-  Pagination,
-  Modal,
-  Alert,
-  Tabs,
-  EmptyState,
-  Breadcrumb,
-  Input,
-} from "../../ui";
+import { type Guest } from "../../data";
+import { Button, Badge, Card, Alert, Input } from "../../ui";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import { GUEST_NAV } from "../../config/navigation";
+import { formatarData } from "@/utils/formatters";
 
-function GuestProfilePage() {
+function PerfilHospede() {
   const { currentUser } = useApp();
-  const guest = currentUser?.data as any;
+  const guest = currentUser?.data as Partial<Guest> | undefined;
   const [editing, setEditing] = useState(false);
   const [saved, setSaved] = useState(false);
 
-  async function handleSave(e: React.FormEvent) {
+  function salvar(e: React.FormEvent) {
     e.preventDefault();
+    // TODO: enviar os dados para a API quando a rota de perfil existir.
+    // Hoje só atualiza a tela; nada é gravado no servidor.
     setSaved(true);
     setEditing(false);
     setTimeout(() => setSaved(false), 3000);
@@ -45,7 +26,7 @@ function GuestProfilePage() {
     { label: "CPF", value: guest?.cpf ?? "" },
     {
       label: "Data de nascimento",
-      value: guest?.birthDate ? formatDate(guest.birthDate) : "",
+      value: guest?.birthDate ? formatarData(guest.birthDate) : "",
     },
     { label: "Sexo", value: guest?.gender ?? "" },
     { label: "E-mail", value: guest?.email ?? "" },
@@ -104,11 +85,11 @@ function GuestProfilePage() {
           </div>
 
           {editing ? (
-            <form onSubmit={handleSave} className="grid grid-cols-2 gap-4">
+            <form onSubmit={salvar} className="grid grid-cols-2 gap-4">
               <Input
                 label="Nome completo"
                 defaultValue={guest?.name}
-                className="col-span-2"
+                wrapperClassName="col-span-2"
               />
               <Input label="CPF" defaultValue={guest?.cpf} />
               <Input
@@ -126,7 +107,7 @@ function GuestProfilePage() {
               <Input
                 label="Rua"
                 defaultValue={guest?.street}
-                className="col-span-2"
+                wrapperClassName="col-span-2"
               />
               <Input label="Número" defaultValue={guest?.addressNumber} />
               <Input label="Complemento" defaultValue={guest?.complement} />
@@ -163,4 +144,4 @@ function GuestProfilePage() {
   );
 }
 
-export default GuestProfilePage;
+export default PerfilHospede;

@@ -20,22 +20,22 @@ interface BtnProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "outline" | "ghost" | "danger";
   size?: "sm" | "md" | "lg";
   children: ReactNode;
-  loading?: boolean;
+  carregando?: boolean;
 }
 export function Button({
   variant = "primary",
   size = "md",
   children,
-  loading,
+  carregando,
   className = "",
   ...props
 }: BtnProps) {
   const variants: Record<string, string> = {
-    primary: "bg-[#1B2B4B] text-white hover:bg-[#0E1825] active:scale-[0.98]",
-    secondary: "bg-[#B8963E] text-white hover:bg-[#9A7A2E] active:scale-[0.98]",
+    primary: "bg-navy-600 text-white hover:bg-navy-800 active:scale-[0.98]",
+    secondary: "bg-gold-500 text-white hover:bg-gold-600 active:scale-[0.98]",
     outline:
-      "border border-[#1B2B4B] text-[#1B2B4B] hover:bg-[#EEF2F9] active:scale-[0.98]",
-    ghost: "text-[#1B2B4B] hover:bg-[#EEF2F9] active:scale-[0.98]",
+      "border border-navy-600 text-navy-600 hover:bg-navy-50 active:scale-[0.98]",
+    ghost: "text-navy-600 hover:bg-navy-50 active:scale-[0.98]",
     danger: "bg-red-600 text-white hover:bg-red-700 active:scale-[0.98]",
   };
   const sizes: Record<string, string> = {
@@ -46,10 +46,10 @@ export function Button({
   return (
     <button
       className={`inline-flex items-center justify-center gap-2 font-medium rounded-lg transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed ${variants[variant]} ${sizes[size]} ${className}`}
-      disabled={loading || props.disabled}
+      disabled={carregando || props.disabled}
       {...props}
     >
-      {loading && (
+      {carregando && (
         <span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
       )}
       {children}
@@ -61,16 +61,18 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
   icon?: ReactNode;
+  wrapperClassName?: string;
 }
 export function Input({
   label,
   error,
   icon,
   className = "",
+  wrapperClassName = "",
   ...props
 }: InputProps) {
   return (
-    <div className="flex flex-col gap-1">
+    <div className={`flex flex-col gap-1 ${wrapperClassName}`}>
       {label && (
         <label className="text-sm font-medium text-slate-700">{label}</label>
       )}
@@ -150,7 +152,7 @@ export function StatCard({
   label,
   value,
   icon,
-  color = "#1B2B4B",
+  color = "#0e1825",
   sub,
   trend,
 }: StatCardProps) {
@@ -240,7 +242,7 @@ export function Modal({
             >
               <path
                 strokeLinecap="round"
-                strokeLinejoin="round"  
+                strokeLinejoin="round"
                 strokeWidth={2}
                 d="M6 18L18 6M6 6l12 12"
               />
@@ -307,13 +309,6 @@ export function Pagination({
   );
 }
 
-interface SearchBarProps {
-  value: string;
-  onChange: (v: string) => void;
-  placeholder?: string;
-  className?: string;
-}
-
 interface Column<T> {
   key: string;
   header: string;
@@ -324,13 +319,13 @@ interface TableProps<T> {
   columns: Column<T>[];
   data: T[];
   emptyMessage?: string;
-  loading?: boolean;
+  carregando?: boolean;
 }
 export function Table<T>({
   columns,
   data,
   emptyMessage = "Nenhum registro encontrado",
-  loading,
+  carregando,
 }: TableProps<T>) {
   return (
     <div className="overflow-x-auto">
@@ -348,7 +343,7 @@ export function Table<T>({
           </tr>
         </thead>
         <tbody>
-          {loading ? (
+          {carregando ? (
             Array.from({ length: 5 }).map((_, i) => (
               <tr key={i} className="border-b border-slate-50">
                 {columns.map((col) => (

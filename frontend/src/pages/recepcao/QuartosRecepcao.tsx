@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import { STAFF_NAV } from "../../config/navigation";
 import { chamarApi, type QuartoFisico } from "../../services/api";
-import { formatarMoeda, formatarData } from "../../utils/formatters";
+import { formatarMoeda } from "../../utils/formatters";
+import { Alert, Input } from "../../ui";
 
 const situacoes = ["Disponível", "Ocupado"];
 
@@ -10,12 +11,11 @@ function situacaoDe(quarto: QuartoFisico) {
   return quarto.ocupado ? "Ocupado" : "Disponível";
 }
 
-function StaffRoomsPage() {
+function QuartosRecepcao() {
   const [quartos, setQuartos] = useState<QuartoFisico[]>([]);
   const [erro, setErro] = useState("");
   const [busca, setBusca] = useState("");
   const [situacao, setSituacao] = useState("");
-  const [selecionado, setSelecionado] = useState<QuartoFisico | null>(null);
 
   useEffect(() => {
     chamarApi<QuartoFisico[]>("/api/quartos")
@@ -36,7 +36,7 @@ function StaffRoomsPage() {
   });
 
   const botao = (ativo: boolean) =>
-    `px-3 py-1.5 rounded-xl text-sm font-medium border transition-all ${ativo ? "bg-[#1B2B4B] text-white border-[#1B2B4B]" : "bg-white text-slate-600 border-slate-200"}`;
+    `px-3 py-1.5 rounded-xl text-sm font-medium border transition-all ${ativo ? "bg-navy-600 text-white border-navy-600" : "bg-white text-slate-600 border-slate-200"}`;
 
   return (
     <DashboardLayout
@@ -52,6 +52,15 @@ function StaffRoomsPage() {
           Quartos
         </h1>
 
+
+        {erro && <Alert type="error" message={erro} onClose={() => setErro("")} />}
+
+        <Input
+          wrapperClassName="max-w-sm"
+          placeholder="Buscar por número ou tipo"
+          value={busca}
+          onChange={(e) => setBusca(e.target.value)}
+        />
 
         <div className="flex gap-2 flex-wrap">
           <button onClick={() => setSituacao("")} className={botao(!situacao)}>
@@ -78,8 +87,7 @@ function StaffRoomsPage() {
           {filtrados.map((quarto) => (
             <div
               key={quarto.id}
-              className="bg-white rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow cursor-pointer p-4"
-              onClick={() => setSelecionado(quarto)}
+              className="bg-white rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow p-4"
             >
               <div className="flex items-start justify-between mb-2">
                 <p className="font-bold text-slate-800">
@@ -107,4 +115,4 @@ function StaffRoomsPage() {
   );
 }
 
-export default StaffRoomsPage;
+export default QuartosRecepcao;

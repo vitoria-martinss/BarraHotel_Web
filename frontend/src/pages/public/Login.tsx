@@ -3,19 +3,20 @@ import { useApp, type AuthUser } from "../../store";
 import { chamarApi } from "../../services/api";
 import { Button, Input, Alert } from "../../ui";
 import PublicLayout from "../../layouts/PublicLayout";
+import logo from "../../layouts/images/logo.png";
 
-function LoginPage() {
+function Login() {
   const { navigate, login } = useApp();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPw, setShowPw] = useState(false);
+  const [mostrarSenha, setMostrarSenha] = useState(false);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [carregando, setCarregando] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function aoEnviar(e: React.FormEvent) {
     e.preventDefault();
     setError("");
-    setLoading(true);
+    setCarregando(true);
     try {
       const { token, usuario } = await chamarApi<{
         token: string;
@@ -38,17 +39,17 @@ function LoginPage() {
     } catch (erro) {
       setError(erro instanceof Error ? erro.message : "Erro ao entrar");
     }
-    setLoading(false);
+    setCarregando(false);
   }
 
   return (
     <PublicLayout>
       <div className="min-h-[80vh] flex items-center justify-center py-12 px-4">
         <div className="w-full max-w-md">
-          {/* Card */}
+
           <div className="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
             <div className="bg-navy-600 px-8 py-6 text-center">
-              <div className="w-5 h-5 rounded-xl flex items-center justify-center mx-auto mb-3"></div>
+              <img src={logo} alt="Barra Hotel" className="w-12 h-12 object-contain mx-auto mb-3" />
               <h1
                 className="text-xl font-bold text-white"
                 style={{ fontFamily: "var(--font-display)" }}
@@ -58,7 +59,7 @@ function LoginPage() {
               <p className="text-slate-400 text-sm mt-1">Acesse sua conta</p>
             </div>
 
-            <form className="px-8 py-6 space-y-4" onSubmit={handleSubmit}>
+            <form className="px-8 py-6 space-y-4" onSubmit={aoEnviar}>
               {error && (
                 <Alert
                   type="error"
@@ -67,19 +68,14 @@ function LoginPage() {
                 />
               )}
 
-              <div className="flex flex-col gap-1">
-                <label className="text-sm font-medium text-slate-700">
-                  E-mail
-                </label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="seu@email.com"
-                  required
-                  className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-500/40 focus:border-gold-500"
-                />
-              </div>
+              <Input
+                label="E-mail"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="seu@email.com"
+                required
+              />
 
               <div className="flex flex-col gap-1">
                 <div className="flex items-center justify-between">
@@ -96,7 +92,7 @@ function LoginPage() {
                 </div>
                 <div className="relative">
                   <input
-                    type={showPw ? "text" : "password"}
+                    type={mostrarSenha ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
@@ -104,10 +100,10 @@ function LoginPage() {
                   />
                   <button
                     type="button"
-                    onClick={() => setShowPw(!showPw)}
+                    onClick={() => setMostrarSenha(!mostrarSenha)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
                   >
-                    {showPw ? (
+                    {mostrarSenha ? (
                       <svg
                         className="w-4 h-4"
                         fill="none"
@@ -151,7 +147,7 @@ function LoginPage() {
                 variant="primary"
                 size="lg"
                 className="w-full"
-                loading={loading}
+                carregando={carregando}
               >
                 Entrar
               </Button>
@@ -174,4 +170,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default Login;

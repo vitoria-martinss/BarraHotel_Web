@@ -1,36 +1,10 @@
-import { useState } from "react";
-import { useApp } from "../../store";
-import {
-  rooms,
-  guests,
-  reservations,
-  tasks,
-  employees,
-  getGuestById,
-  getRoomById,
-  getEmployeeById,
-  formatCurrency,
-  formatDate,
-  STATUS_COLORS,
-  type Reservation,
-} from "../../data";
-import {
-  Button,
-  Badge,
-  Card,
-  StatCard,
-  Table,
-  Pagination,
-  Modal,
-  Alert,
-  Tabs,
-  EmptyState,
-  Dropdown,
-} from "../../ui";
+import { tasks, getRoomById, getEmployeeById } from "../../data";
+import { Button, Badge, Card, Table } from "../../ui";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import { STAFF_NAV } from "../../config/navigation";
+import { formatarData } from "@/utils/formatters";
 
-function MaintenancePage() {
+function Manutencao() {
   const maintenanceTasks = tasks.filter((t) => t.type === "Manutenção");
   const prioColors: Record<string, string> = {
     Alta: "bg-red-100 text-red-700",
@@ -128,7 +102,7 @@ function MaintenancePage() {
                 header: "Data",
                 render: (t) => (
                   <span className="text-sm font-mono-data">
-                    {formatDate(t.date)} {t.time}
+                    {formatarData(t.date)} {t.time}
                   </span>
                 ),
               },
@@ -170,4 +144,4 @@ function MaintenancePage() {
   );
 }
 
-export default MaintenancePage;
+export default Manutencao;

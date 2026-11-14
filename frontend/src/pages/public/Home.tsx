@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
 import { useApp } from "../../store";
-import { Alert, Button, Badge, Card, Input, Select } from "../../ui";
-import { guests as guestData, type Room } from "../../data";
+import { Alert, Button } from "../../ui";
+import { type Room } from "../../data";
 import {
   chamarApi,
   mensagemDeErro,
   tipoParaQuarto,
   type TipoQuarto,
 } from "../../services/api";
-import { formatarMoeda } from "../../utils/formatters";
 import PublicLayout from "../../layouts/PublicLayout";
 import { QuartoCard } from "../../components/QuartoCard";
 import recepcao from "../../layouts/images/recepcao.png";
+import garagem from "../../layouts/images/garagem.png";
+import cafe from "../../layouts/images/cafe.png";
 
-function HomePage() {
+
+function Home() {
   const { navigate } = useApp();
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
@@ -29,19 +31,18 @@ function HomePage() {
   }, []);
 
   const services = [
-    { icon: "", label: "Wi-Fi Gratuito", desc: "Conexão rápida em todo hotel" },
-    { icon: "", label: "Café da Manhã", desc: "Buffet completo diariamente" },
-    { icon: "", label: "Garagem", desc: "Gratuito para hóspedes" },
-    { icon: "", label: "Academia", desc: "Aberta das 7h às 22h" },
-    { icon: "", label: "Limpeza Diária", desc: "Serviço de governança" },
-    { icon: "", label: "Segurança 24h", desc: "Recepção e monitoramento" },
-    { icon: "", label: "Ar-condicionado", desc: "Nos quartos selecionados" },
-    { icon: "", label: "Frigobar", desc: "Nas suítes selecionadas" },
+    { label: "Wi-Fi Gratuito", desc: "Conexão rápida em todo hotel" },
+    { label: "Café da Manhã", desc: "Café completo diariamente" },
+    { label: "Garagem", desc: "Gratuito para hóspedes" },
+    { label: "Academia", desc: "Aberta das 7h às 22h, conta com aparelho novos e modernos" },
+    { label: "Limpeza Diária", desc: "Serviço de governança" },
+    { label: "Segurança 24h", desc: "Recepção e monitoramento" },
+    { label: "Ar-condicionado", desc: "Nos quartos selecionados" },
+    { label: "Frigobar", desc: "Nas suítes selecionadas" },
   ];
 
   return (
     <PublicLayout>
-      {/* Hero */}
       <section className="relative h-[92vh] min-h-150 flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-navy-900">
           <img
@@ -67,7 +68,7 @@ function HomePage() {
             Conforto, elegância e qualidade em cada detalhe da sua estadia.
           </p>
 
-          {/* Availability Search */}
+
           <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5 max-w-3xl mx-auto">
             <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
               <div className="flex flex-col gap-1 text-left">
@@ -140,7 +141,7 @@ function HomePage() {
           </div>
         </div>
 
-        {/* Scroll indicator */}
+
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/40 flex flex-col items-center gap-1 animate-bounce">
           <svg
             className="w-5 h-5"
@@ -158,7 +159,7 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Stats bar */}
+
       <section className="bg-navy-600 text-white py-5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
@@ -170,7 +171,7 @@ function HomePage() {
             ].map((stat) => (
               <div key={stat.label}>
                 <p
-                  className="text-2xl font-bold text-gold-300"
+                  className="text-2xl font-bold text-gold-400"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   {stat.value}
@@ -182,7 +183,7 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Featured Rooms */}
+
       <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-end justify-between mb-10">
           <div>
@@ -197,7 +198,7 @@ function HomePage() {
             </h2>
           </div>
           <Button variant="outline" onClick={() => navigate({ id: "rooms" })}>
-            Ver todos os quartos →
+            Ver todos os quartos 
           </Button>
         </div>
 
@@ -220,7 +221,7 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Services */}
+
       <section className="bg-cream py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-10">
@@ -240,7 +241,7 @@ function HomePage() {
                 key={s.label}
                 className="bg-white rounded-2xl p-5 text-center border border-slate-100 hover:border-gold-300/40 hover:shadow-md transition-all"
               >
-                <div className="text-3xl mb-3">{s.icon}</div>
+                <div className="text-3xl mb-3"></div>
                 <h4 className="font-semibold text-slate-800 text-sm mb-1">
                   {s.label}
                 </h4>
@@ -251,27 +252,27 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Hotel photo strip */}
-      <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6">
+
+      <section className="py-19 max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 h-64">
           <div className="col-span-2 rounded-2xl overflow-hidden">
             <img
-              src=""
-              alt="Hotel pool"
+              src={cafe}
+              alt="Barra Hotel pool"
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+            />
+          </div>
+          <div className="rounded-2xl overflow-hidden">
+            <img
+              src={garagem}
+              alt="Barra Hotel breakfast"
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
             />
           </div>
           <div className="rounded-2xl overflow-hidden">
             <img
               src=""
-              alt="Hotel breakfast"
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-            />
-          </div>
-          <div className="rounded-2xl overflow-hidden">
-            <img
-              src=""
-              alt="Hotel interior"
+              alt="Barra Hotel academia"
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
             />
           </div>
@@ -281,4 +282,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default Home;

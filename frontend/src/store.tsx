@@ -1,5 +1,5 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
-import { type Guest, type Employee } from './data';
+import { createContext, useContext, useState, ReactNode } from "react";
+import { type Guest, type Employee } from "./data";
 
 export type Page =
   // Páginas públicas
@@ -14,7 +14,6 @@ export type Page =
   | { id: 'login' }
   | { id: 'register' }
   | { id: 'forgot-password' }
-  | { id: 'booking'; step?: number; roomId?: string }
 
   // Área do hóspede
   | { id: 'booking'; step?: number; roomId?: string }
@@ -90,12 +89,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }
 
   function login(user: AuthUser) {
-  setCurrentUser(user);
-
-  localStorage.setItem('usuario', JSON.stringify(user));
-
-  navigate(getUserAreaPage(user));
- }
+    setCurrentUser(user);
+    localStorage.setItem('usuario', JSON.stringify(user));
+    navigate(getUserAreaPage(user));
+  }
 
   function logout() {
     setCurrentUser(null);

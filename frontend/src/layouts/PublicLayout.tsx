@@ -53,10 +53,9 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
       className="min-h-screen flex flex-col"
       style={{ fontFamily: "var(--font-body)" }}
     >
-      {/* HEADER */}
       <header className="bg-navy-800 text-white sticky top-0 z-40 shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          {/* LOGO */}
+
           <button
             onClick={() => navigate({ id: "home" })}
             className="flex items-center gap-2.5 group"
@@ -79,7 +78,7 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
             </div>
           </button>
 
-          {/* NAVEGAÇÃO */}
+
           <nav className="hidden md:flex items-center gap-6">
             {navLinks.map((link) => (
               <button
@@ -96,9 +95,9 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
             ))}
           </nav>
 
-          {/* BOTÕES DE ACESSO */}
+
           <div className="flex items-center gap-3">
-            {/* FAZER RESERVA */}
+
             <button
               onClick={fazerReserva}
               className="bg-gold-500 hover:bg-gold-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
@@ -106,7 +105,7 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
               Fazer reserva
             </button>
 
-            {/* ENTRAR */}
+
             <button
               onClick={entrar}
               className="border border-gold-500 text-gold-300 hover:bg-gold-500 hover:text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
@@ -117,14 +116,14 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
         </div>
       </header>
 
-      {/* CONTEÚDO DA PÁGINA */}
+
       <main className="flex-1">{children}</main>
 
-      {/* FOOTER */}
+
       <footer className="bg-navy-900 text-slate-300 pt-12 pb-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
-            {/* IDENTIFICAÇÃO */}
+
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <span
@@ -136,7 +135,7 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
               </div>
             </div>
 
-            {/* NAVEGAÇÃO */}
+
             <div>
               <h4 className="text-white font-semibold mb-4 text-sm">
                 Navegação
@@ -156,7 +155,7 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
               </ul>
             </div>
 
-            {/* CONTATO */}
+
             <div>
               <h4 className="text-white font-semibold mb-4 text-sm">Contato</h4>
 
@@ -167,12 +166,13 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
                 </li>
 
                 <li>(19) 98448-7235</li>
+                
+                <li>(19) 3643-2943</li>
 
                 <li>reservasbarrahotel@gmail.com</li>
               </ul>
             </div>
 
-            {/* INSTITUCIONAL */}
             <div>
               <h4 className="text-white font-semibold mb-4 text-sm">
                 Institucional
@@ -195,7 +195,7 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
             </div>
           </div>
 
-          {/* DIREITOS RESERVADOS */}
+
           <div className="border-t border-slate-800 pt-5 flex flex-col sm:flex-row items-center justify-between gap-2">
             <p className="text-xs text-slate-500">
               Todos os direitos reservados © 2026 Barra Hotel
